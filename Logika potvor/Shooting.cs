@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
-    class Shooting : Status
+    public class Shooting : Status
     {
         private ICreature creature;
 
@@ -19,7 +19,7 @@ namespace DefendersOfH6
         {
             if (this.creature.isDead())
             {
-                return this.creature.getDiying();
+                return this.creature.getDying();
             }
             return null;
         }

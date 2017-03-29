@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CreaturesV2
+namespace DefendersOfH6
 {
-    class Dying : Status
+    public class Dying : Status
     {
         private ICreature creature;
 

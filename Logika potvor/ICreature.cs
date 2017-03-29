@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
-    interface ICreature
+    public interface ICreature
     {
         int ReciveDamage(int damage);
         Boolean isDead();

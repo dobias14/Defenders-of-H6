@@ -4,17 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CreaturesV2
+namespace DefendersOfH6
 {
-    class BasicCreature : ThinkingObject, ICreature
+    public class BasicCreature : ThinkingObject, ICreature
     {
 
-        private Node position { get; set; }
+        public static string NEGATIVE_DAMAGE = "negative damage";
 
-        private int damage { get; set; }
 
-        private int hp { get; set; }
+        private Node position;
+        public Node Position { get { return position; } set { position = value; } }
 
+        private int damage;
+        public int Damage { get { return damage; } set { damage = value; } }
+
+        private int hp;
+        public int Hp { get { return hp; } set { hp = value; } }
+        
         private Status shooting;
         private Status mooving;
         private Status dying;
@@ -46,7 +52,12 @@ namespace CreaturesV2
 
         public int ReciveDamage(int damage)
         {
-            return this.damage -= damage;
+            if(damage < 0)
+            {
+                throw new ArgumentOutOfRangeException(NEGATIVE_DAMAGE);
+            }
+            this.hp -= damage;
+            return hp;
         }
 
         public Boolean isDead()
@@ -74,3 +85,23 @@ namespace CreaturesV2
         }
     }
 }
+
+/*
+             * vyratam si najkratsiu cestu do cieloveho vrchola(floyd)
+             * zistims si cestum*
+             * ak este niesom pri vrchole spravim krok
+             * zistim ci mozem po niekom utocit
+             * ak uz som pri vrchole, alebo mozem utocit srielam(na dialku/iba na blizko)
+             * (dam niekomu damage)
+             */
+
+/*
+ * beriem od niekoho damage(pri strelbe na mna)
+ * som mrtvy? ak nula zivota
+ */
+
+/*
+ * incicalizacia -
+ * kolko mam zivota
+ * kde sa nachadzam
+ */
