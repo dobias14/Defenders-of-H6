@@ -13,6 +13,7 @@ namespace DefendersOfH6
 		private Random r = new Random();
 		private int distance = 10;
 		private Node[,] nodes;
+		private int target;
 		
 		public Graph(int w, int h){
 			width = w;
@@ -84,6 +85,14 @@ namespace DefendersOfH6
 		
 		public void setNodes(Node [,] defNodes){
 			nodes = defNodes;
+		}
+		
+		public void setFinalTargetLocation(int x, int y){
+			target = nodes[x][y].getId();
+		}
+		
+		public int getFinalTargetLocation(){
+			return target;
 		}
 	}
 }
