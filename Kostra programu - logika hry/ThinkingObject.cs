@@ -4,27 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DefendersOfH6
-{
-    abstract class ThinkingObject
-    {
+namespace DefendersOfH6{
+    
+    abstract class ThinkingObject{
         public Status presentStatus;
 
         public void thinking(){
-            if (presentStatus == null)
-            {//exception
+            if (presentStatus == null){//exception
                 return;
             }
             Status novyStav = presentStatus.changeStatus();
-            if (novyStav != null)
-            {//nastala zmena
+            if (novyStav != null){//nastala zmena
                 presentStatus.onEnd();
                 novyStav.onStart();
                 novyStav.prepare();
                 this.presentStatus = novyStav;
             }
-            else
-            {//vsetko je po starom a vykonam to co mam robit teraz bez zmeny
+            else{//vsetko je po starom a vykonam to co mam robit teraz bez zmeny
                 presentStatus.prepare();
             }
         }
