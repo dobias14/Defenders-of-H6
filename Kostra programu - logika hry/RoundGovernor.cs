@@ -24,6 +24,11 @@ namespace DefendersOfH6
             this.arrayOfObject = arrayOfObjectInGame;
         }
 
+        public void nastavFPS( double pocetFPS) {
+            int pocetMilisekundNa1Akciu = (int)Math.Round((1000 / pocetFPS), MidpointRounding.ToEven);          
+            setSleepingTimeLength(pocetMilisekundNa1Akciu);
+        }
+
         public void stopThread()
         {
             running = false;
