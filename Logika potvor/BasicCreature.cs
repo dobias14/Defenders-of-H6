@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
@@ -25,14 +21,14 @@ namespace DefendersOfH6
         private Status mooving;
         private Status dying;
 
-        public BasicCreature(Node position, int damage, int hp)
+        public BasicCreature(Node position, Node finalDestinantion, Graph graph, int damage, int hp)
         {
             this.position = position;
             this.damage = damage;
             this.hp = hp;
-
-            this.shooting = new Shooting(this);
-            this.mooving = new Mooving(this);
+            
+            this.shooting = new Shooting(this, graph);
+            this.mooving = new Mooving(this, finalDestinantion, graph);
             this.dying = new Dying(this);
 
             base.presentStatus = mooving;
@@ -41,8 +37,11 @@ namespace DefendersOfH6
         
         public override void action()
         {
-            throw new NotImplementedException();
-            
+            Node nextPosition = ((Mooving)mooving).NextPosition;
+            if (nextPosition.isEnable())
+            {
+                this.position = nextPosition;
+            }
         }
 
         public override void draw()
@@ -83,25 +82,10 @@ namespace DefendersOfH6
         {
             return this.mooving;
         }
+
+        public Node getPosition()
+        {
+            return this.position;
+        }
     }
 }
-
-/*
-             * vyratam si najkratsiu cestu do cieloveho vrchola(floyd)
-             * zistims si cestum*
-             * ak este niesom pri vrchole spravim krok
-             * zistim ci mozem po niekom utocit
-             * ak uz som pri vrchole, alebo mozem utocit srielam(na dialku/iba na blizko)
-             * (dam niekomu damage)
-             */
-
-/*
- * beriem od niekoho damage(pri strelbe na mna)
- * som mrtvy? ak nula zivota
- */
-
-/*
- * incicalizacia -
- * kolko mam zivota
- * kde sa nachadzam
- */

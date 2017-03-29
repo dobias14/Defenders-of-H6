@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
     public class Shooting : Status
     {
         private ICreature creature;
+        private Graph graph;
 
-        public Shooting(ICreature creature)
+        public Shooting(ICreature creature, Graph graph)
         {
             this.creature = creature;
+            this.graph = graph;
         }
 
         public Status changeStatus()

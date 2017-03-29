@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
@@ -10,6 +6,8 @@ namespace DefendersOfH6
     {
         int ReciveDamage(int damage);
         Boolean isDead();
+
+        Node getPosition();
 
         Status getDying();
         Status getShooting();
