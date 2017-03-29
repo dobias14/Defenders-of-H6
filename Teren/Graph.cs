@@ -25,7 +25,7 @@ namespace DefendersOfH6
 		public void createNodes(){
 			for (int i = 0; i < width; i++){
 				for (int j = 0; j < height; j++){
-					nodes[i,j] = new Node(id,i*distance,j*distance,r.Next(4));
+					nodes[i,j] = new Node(id,i*distance,j*distance,r.Next(3));
 					id++;
 			    }
 	        }
@@ -74,12 +74,16 @@ namespace DefendersOfH6
 			return nodes[x,y];
 		}
 		
-		public Array getNodes(){
+		public Node[,] getNodes(){
 			return nodes;
 		}
 		
 		public int getDistance(){
 			return distance;
+		}
+		
+		public void setNodes(Node [,] defNodes){
+			nodes = defNodes;
 		}
 	}
 }
