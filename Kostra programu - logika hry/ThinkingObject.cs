@@ -32,7 +32,7 @@ namespace DefendersOfH6
         }
         // vykonam to co som si pripravil v Status.prepare(); a podobnych metodach ako Status.onEnd() a Status.onStart()
         public abstract void action();
-        //
+        // tu treba definovat ako sa objekt bude zobrazovat pouzivatelovi
         public abstract void draw();
     }
 }
