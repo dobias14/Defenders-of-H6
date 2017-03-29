@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +8,11 @@ namespace DefendersOfH6
 {
     interface ICreature
     {
-        void Move();
-
         int ReciveDamage(int damage);
+        Boolean isDead();
 
-        void Shoot();
+        Status getDying();
+        Status getShooting();
+        Status getMoovnig();
     }
 }

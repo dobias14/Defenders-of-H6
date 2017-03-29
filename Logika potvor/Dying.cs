@@ -4,40 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DefendersOfH6
+namespace CreaturesV2
 {
-    class Mooving : Status
+    class Dying : Status
     {
         private ICreature creature;
 
-        public Mooving(ICreature creature)
+        public Dying(ICreature creature)
         {
             this.creature = creature;
         }
-        
+
         public Status changeStatus()
         {
-            if (this.creature.isDead())
-            {
-                return this.creature.getDiying();
-            }
-            //change to Shooting is missing
             return null;
         }
 
         public void onEnd()
         {
-            throw new NotImplementedException();
+            //do nothing
         }
 
         public void onStart()
         {
-            throw new NotImplementedException();
+            //do nothing
         }
 
         public void prepare()
         {
-            throw new NotImplementedException();
+            //do nothing
         }
     }
 }

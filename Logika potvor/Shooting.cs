@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +10,18 @@ namespace DefendersOfH6
     {
         private ICreature creature;
 
+        public Shooting(ICreature creature)
+        {
+            this.creature = creature;
+        }
+
         public Status changeStatus()
         {
-            throw new NotImplementedException();
+            if (this.creature.isDead())
+            {
+                return this.creature.getDiying();
+            }
+            return null;
         }
 
         public void onEnd()

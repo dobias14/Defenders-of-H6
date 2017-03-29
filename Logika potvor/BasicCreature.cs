@@ -1,16 +1,37 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DefendersOfH6
+namespace CreaturesV2
 {
     class BasicCreature : ThinkingObject, ICreature
     {
 
-        private int damage;
-        private int hp;
+        private Node position { get; set; }
+
+        private int damage { get; set; }
+
+        private int hp { get; set; }
+
+        private Status shooting;
+        private Status mooving;
+        private Status dying;
+
+        public BasicCreature(Node position, int damage, int hp)
+        {
+            this.position = position;
+            this.damage = damage;
+            this.hp = hp;
+
+            this.shooting = new Shooting(this);
+            this.mooving = new Mooving(this);
+            this.dying = new Dying(this);
+
+            base.presentStatus = mooving;
+        }
+        
         
         public override void action()
         {
@@ -22,21 +43,34 @@ namespace DefendersOfH6
         {
             throw new NotImplementedException();
         }
-        
-
-        public void Move()
-        {
-            throw new NotImplementedException();
-        }
 
         public int ReciveDamage(int damage)
         {
-            throw new NotImplementedException();
+            return this.damage -= damage;
         }
 
-        public void Shoot()
+        public Boolean isDead()
         {
-            throw new NotImplementedException();
+            if (hp <= 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public Status getDying()
+        {
+            return this.dying;
+        }
+
+        public Status getShooting()
+        {
+            return this.shooting;
+        }
+
+        public Status getMoovnig()
+        {
+            return this.mooving;
         }
     }
 }
