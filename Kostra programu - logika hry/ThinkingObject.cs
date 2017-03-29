@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +10,10 @@ namespace DefendersOfH6
     {
         public Status presentStatus;
 
-        public Status thinking()
-        {
+        public void thinking(){
             if (presentStatus == null)
             {//exception
-                return null;
+                return;
             }
             Status novyStav = presentStatus.changeStatus();
             if (novyStav != null)
@@ -22,12 +21,11 @@ namespace DefendersOfH6
                 presentStatus.onEnd();
                 novyStav.onStart();
                 novyStav.prepare();
-                return novyStav;
+                this.presentStatus = novyStav;
             }
             else
             {//vsetko je po starom a vykonam to co mam robit teraz bez zmeny
                 presentStatus.prepare();
-                return presentStatus;
             }
         }
         // vykonam to co som si pripravil v Status.prepare(); a podobnych metodach ako Status.onEnd() a Status.onStart()
