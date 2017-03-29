@@ -37,15 +37,27 @@ namespace DefendersOfH6
 
         public void run()
         {
+            ICollection myCollection = ArrayList.Synchronized(arrayOfObject);
             while (running)
             {
                 World.addOneTick();
                 Thread.Sleep(sleepingTimeLength);
 
-                foreach (ThinkingObject objectinGame in arrayOfObject) {
-                    objectinGame.thinking();
-                    objectinGame.action();
-                    objectinGame.draw();
+                lock (myCollection.SyncRoot) {
+                    foreach (ThinkingObject objectinGame in arrayOfObject)
+                    {
+                        objectinGame.thinking();
+                    }
+
+                    foreach (ThinkingObject objectinGame in arrayOfObject)
+                    {
+                        objectinGame.action();
+                    }
+
+                    foreach (ThinkingObject objectinGame in arrayOfObject)
+                    {
+                        objectinGame.draw();
+                    }
                 }
                 if (form1 != null)
                 {
