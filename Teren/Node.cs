@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 { 
-	class Node {
+	public class Node {
 		private int x,y,id,terrain;
 		private bool enable;
 		private List<Node> neighbours = new List<Node>();
