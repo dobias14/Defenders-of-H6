@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 { 
-	class Graph {
+	public class Graph {
 		private int width = 0;
 		private int height = 0;
 		private int id = 0;
