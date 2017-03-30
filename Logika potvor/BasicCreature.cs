@@ -16,18 +16,22 @@ namespace DefendersOfH6
 
         private int hp;
         public int Hp { get { return hp; } set { hp = value; } }
+
+        private World world;
         
         private Status shooting;
         private Status mooving;
         private Status dying;
 
-        public BasicCreature(Node position, Node finalDestinantion, Graph graph, int damage, int hp)
+        public BasicCreature(Node position, Node finalDestinantion, Graph graph, int damage, int hp, World world)
         {
             this.position = position;
             this.damage = damage;
             this.hp = hp;
+
+            this.world = world;
             
-            this.shooting = new Shooting(this, graph);
+            this.shooting = new Shooting(this);
             this.mooving = new Mooving(this, finalDestinantion, graph);
             this.dying = new Dying(this);
 
@@ -37,10 +41,22 @@ namespace DefendersOfH6
         
         public override void action()
         {
-            Node nextPosition = ((Mooving)mooving).NextPosition;
-            if (nextPosition.isEnable())
+            if(base.presentStatus.GetType() == typeof(Mooving))
             {
-                this.position = nextPosition;
+                Node nextPosition = ((Mooving)mooving).NextPosition;
+                if (nextPosition.isEnable())
+                {
+                    this.position = nextPosition;
+                }
+            }
+            else if(base.presentStatus.GetType() == typeof(Shooting))
+            {
+                int doDamage = ((Shooting)shooting).Damage;
+                world.doDamegeToH6Server(doDamage);
+            }
+            else if(base.presentStatus.GetType() == typeof(Dying))
+            {
+                //do nothing
             }
         }
 
