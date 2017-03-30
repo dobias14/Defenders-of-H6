@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
-    class BasicTower: ThinkingObject, ITower
+    public class BasicTower: ThinkingObject, ITower
     {
         private int damage;
         private int hp;
