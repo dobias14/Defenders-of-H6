@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
-    interface Status
+    public interface Status
     {
         // nainicializujem vsetko co potrebujem
         void onStart();
