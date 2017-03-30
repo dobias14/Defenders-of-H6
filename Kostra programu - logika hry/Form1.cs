@@ -20,7 +20,7 @@ namespace DefendersOfH6
 
             List<ThinkingObject> o = new List<ThinkingObject>();
 
-            w = new World(o);
+            w = new World(o,100);
         }
 
         private void label1_Click(object sender, EventArgs e)
