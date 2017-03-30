@@ -54,7 +54,17 @@ namespace DefendersOfH6
             stopThread();
         }
 
-        public void setLifeOfH6ServerPc(int newLife){
+        public void doDamegeToH6Server(int amountOfDamage){
+            if (amountOfDamage > lifeOfH6ServerPc){
+                lifeOfH6ServerPc = 0;
+            }
+            else {
+                lifeOfH6ServerPc -= amountOfDamage;
+            }
+            
+        }
+
+        private void setLifeOfH6ServerPc(int newLife){
             lifeOfH6ServerPc = newLife;
         }
 
