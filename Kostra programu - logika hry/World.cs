@@ -9,10 +9,12 @@ namespace DefendersOfH6
 {
     class World
     {
-        private static int time = 0;
         private List<ThinkingObject> arrayOfObjectInGame = new List<ThinkingObject>();
         private RoundGovernor manazerKola = null;
         private Thread thread = null;
+
+        private int lifeOfH6ServerPc = 0;
+        private int score = 0;
 
 
         public World(List<ThinkingObject> objectInGame){
@@ -52,17 +54,23 @@ namespace DefendersOfH6
             stopThread();
         }
 
-        public static int getTime() {
-            return time;
+        public void setLifeOfH6ServerPc(int newLife){
+            lifeOfH6ServerPc = newLife;
         }
 
-        public static void addOneTick()
-        {
-            time++;
+        public int getLifeOfH6ServerPc() {
+            return lifeOfH6ServerPc;
         }
-        public static void resetTimer()
-        {
-            time = 0;
+
+
+        public void setScore(int newScore){
+            score = newScore;
         }
+
+        public int getScore(){
+            return score;
+        }
+
+
     }
 }
