@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
-    class RoundGovernor
+    public class RoundGovernor
     {
         volatile bool running = false;
         private Form1 form1;
@@ -43,8 +43,7 @@ namespace DefendersOfH6
         public void run()
         {
             ICollection myCollection = ArrayList.Synchronized(arrayOfObject);
-            while (running)
-            {
+            while (running){
                 World.addOneTick();
                 Thread.Sleep(sleepingTimeLength);
 
