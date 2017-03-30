@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,42 +13,14 @@ namespace DefendersOfH6
 {
     public partial class Form1 : Form
     {
-        CountingThread clock;
+        World w;
         public Form1()
         {
             InitializeComponent();
-            clock = new CountingThread(true, this);
 
-            World w = new World();
+            List<ThinkingObject> o = new List<ThinkingObject>();
 
-            Thread oThread = new Thread(new ThreadStart(clock.run));
-
-            // Start the thread
-            oThread.Start();
-
-            // Spin for a while waiting for the started thread to become
-            // alive:
-            while (!oThread.IsAlive) ;
-
-            // Put the Main thread to sleep for 1 millisecond to allow oThread
-            // to do some work:
-            //Thread.Sleep(1);
-            //oThread.
-
-            // Request that oThread be stopped
-            //oThread.Abort();
-
-            // Wait until oThread finishes. Join also has overloads
-            // that take a millisecond interval or a TimeSpan object.
-            //oThread.Join();
-
-            Console.WriteLine();
-            Console.WriteLine("clock has finished.");
-
-            Console.WriteLine();
-            Console.WriteLine("and clock number is : " + World.getTime());
-            
-            //World.resetTimer();
+            w = new World(o,100);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -58,12 +30,13 @@ namespace DefendersOfH6
 
         private void button1_Click(object sender, EventArgs e)
         {
-            label1.Text = World.getTime() + "";
+            w.zacniKolo();
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            clock.stopThread();
+            w.skonciKolo();
         }
     }
 }

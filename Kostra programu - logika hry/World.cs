@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,47 +9,86 @@ namespace DefendersOfH6
 {
     class World
     {
-        static bool working = false;
-        private static int time = 0;
+        private List<ThinkingObject> arrayOfObjectInGame = new List<ThinkingObject>();
+        private RoundGovernor manazerKola = null;
+        private Thread thread = null;
 
-        public World() {
-            CountingThread clock = new CountingThread(true);
+        private int lifeOfH6ServerPc = 0;
+        private int score = 0;
 
-            Thread oThread = new Thread(new ThreadStart(clock.run));
+
+        public World(List<ThinkingObject> objectInGame, int startingLifeOfH6Server){
+            manazerKola = new RoundGovernor(true, arrayOfObjectInGame);
+            thread = new Thread(new ThreadStart(manazerKola.run));
+            arrayOfObjectInGame = objectInGame;
+
+            setLifeOfH6ServerPc(startingLifeOfH6Server);
+        }
+
+        private void startThread() {
+            if (manazerKola == null) {
+                manazerKola = new RoundGovernor(true, arrayOfObjectInGame);
+            }
+            if (thread == null) {
+                thread = new Thread(new ThreadStart(manazerKola.run));
+            }
 
             // Start the thread
-            oThread.Start();
+            thread.Start();
 
             // Spin for a while waiting for the started thread to become
             // alive:
-            while (!oThread.IsAlive) ;
-
-            // Put the Main thread to sleep for 1 millisecond to allow oThread
-            // to do some work:
-            Thread.Sleep(1);
-
-            // Request that oThread be stopped
-            oThread.Abort();
-
-            // Wait until oThread finishes. Join also has overloads
-            // that take a millisecond interval or a TimeSpan object.
-            oThread.Join();
-
-            Console.WriteLine();
-            Console.WriteLine("clock has finished.");
+            while (!thread.IsAlive) ;
         }
 
-        public static int getTime() {
-            return time;
+        private void stopThread() {
+            manazerKola.stopThread();
+            thread.Join();
+            thread = null;
+            manazerKola = null;
         }
 
-        public static void addOneTick()
-        {
-            time++;
+        public void zacniKolo() {
+            startThread();
         }
-        public static void resetTimer()
-        {
-            time = 0;
+
+        public void skonciKolo() {
+            stopThread();
+        }
+
+        public void doDamegeToH6Server(int amountOfDamage){
+            if (amountOfDamage > lifeOfH6ServerPc){
+                lifeOfH6ServerPc = 0;
+            }
+            else {
+                lifeOfH6ServerPc -= amountOfDamage;
+            }
+            
+        }
+
+        private void setLifeOfH6ServerPc(int newLife){
+            lifeOfH6ServerPc = newLife;
+        }
+
+        public int getLifeOfH6ServerPc() {
+            return lifeOfH6ServerPc;
+        }
+
+
+        private void setScore(int newScore){
+            score = newScore;
+        }
+
+        public void addToScore(int scoreToAdd){
+            score += scoreToAdd;
+        }
+
+        public void resetScore(){
+            score = 0;
+        }
+
+        public int getScore(){
+            return score;
         }
 
 

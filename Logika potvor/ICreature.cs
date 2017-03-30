@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace DefendersOfH6
 {
-    interface ICreature
+    public interface ICreature
     {
-        void Move();
-
         int ReciveDamage(int damage);
+        Boolean isDead();
 
-        void Shoot();
+        Node getPosition();
+
+        Status getDying();
+        Status getShooting();
+        Status getMoovnig();
     }
 }
