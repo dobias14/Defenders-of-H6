@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DefendersOfH6.Logika_vezi
+namespace DefendersOfH6
 {
-    class Shooting : Status
+    class Aiming : Status
     {
-        private ITower tower;
+        public Boolean isReady = false;
 
         public Status changeStatus()
         {
