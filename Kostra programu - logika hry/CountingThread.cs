@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
-    class CountingThread
+    public class CountingThread
     {
-        bool running = false;
+        private bool running = false;
         private Form1 form1;
 
         public CountingThread(bool isRunning) {
