@@ -11,7 +11,7 @@ namespace CreaturesTests
         public void TestDead1()
         {
             int damage = 10, hp = 100;
-            ICreature creature = new BasicCreature(null, null, null, damage, hp);
+            ICreature creature = new BasicCreature(null, null, null, damage, hp, null);
 
             Assert.IsFalse(creature.isDead());
         }
@@ -20,7 +20,7 @@ namespace CreaturesTests
         public void TestDead2()
         {
             int damage = 10, hp = 100;
-            ICreature creature = new BasicCreature(null, null, null, damage, hp);
+            ICreature creature = new BasicCreature(null, null, null, damage, hp, null);
 
             int takenDamage = 100;
             creature.ReciveDamage(takenDamage);
@@ -32,7 +32,7 @@ namespace CreaturesTests
         public void TestDead3()
         {
             int damage = 10, hp = 100;
-            ICreature creature = new BasicCreature(null, null, null, damage, hp);
+            ICreature creature = new BasicCreature(null, null, null, damage, hp, null);
 
             int takenDamage = 120;
             creature.ReciveDamage(takenDamage);
@@ -44,7 +44,7 @@ namespace CreaturesTests
         public void TestHp()
         {
             int damage = 10, hp = 100;
-            BasicCreature creature = new BasicCreature(null, null, null, damage, hp);
+            BasicCreature creature = new BasicCreature(null, null, null, damage, hp, null);
 
             int takenDamage = 50;
 
@@ -55,7 +55,7 @@ namespace CreaturesTests
         public void TestHp2()
         {
             int damage = 10, hp = 100;
-            BasicCreature creature = new BasicCreature(null, null, null, damage, hp);
+            BasicCreature creature = new BasicCreature(null, null, null, damage, hp, null);
 
             try
             {
@@ -75,7 +75,7 @@ namespace CreaturesTests
             int x = 0, y = 0, id = 0, terrain = 0;
             Node startingNode = new Node(id, x, y, terrain);
             int damage = 10, hp = 100;
-            BasicCreature creature = new BasicCreature(startingNode, null, null, damage, hp);
+            BasicCreature creature = new BasicCreature(startingNode, null, null, damage, hp, null);
 
             Node actualPosition = creature.Position;
 
