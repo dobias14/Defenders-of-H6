@@ -17,10 +17,12 @@ namespace DefendersOfH6
         private int score = 0;
 
 
-        public World(List<ThinkingObject> objectInGame){
+        public World(List<ThinkingObject> objectInGame, int startingLifeOfH6Server){
             manazerKola = new RoundGovernor(true, arrayOfObjectInGame);
             thread = new Thread(new ThreadStart(manazerKola.run));
             arrayOfObjectInGame = objectInGame;
+
+            setLifeOfH6ServerPc(startingLifeOfH6Server);
         }
 
         private void startThread() {
@@ -73,8 +75,16 @@ namespace DefendersOfH6
         }
 
 
-        public void setScore(int newScore){
+        private void setScore(int newScore){
             score = newScore;
+        }
+
+        public void addToScore(int scoreToAdd){
+            score += scoreToAdd;
+        }
+
+        public void resetScore(){
+            score = 0;
         }
 
         public int getScore(){
