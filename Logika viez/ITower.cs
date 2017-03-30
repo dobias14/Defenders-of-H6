@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
-    interface ITower
+   public interface ITower
     {
         void shoot();
         int receiveDamage(int dmg);
