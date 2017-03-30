@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6{
     
-    abstract class ThinkingObject{
+    public abstract class ThinkingObject{
         public Status presentStatus;
 
         public void thinking(){
