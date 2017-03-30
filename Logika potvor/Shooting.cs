@@ -5,12 +5,13 @@ namespace DefendersOfH6
     public class Shooting : Status
     {
         private ICreature creature;
-        private Graph graph;
+        private int damage;
+        public int Damage { get { return this.damage; } }
 
-        public Shooting(ICreature creature, Graph graph)
+        public Shooting(ICreature creature)
         {
             this.creature = creature;
-            this.graph = graph;
+            this.damage = 0;
         }
 
         public Status changeStatus()
@@ -24,17 +25,17 @@ namespace DefendersOfH6
 
         public void onEnd()
         {
-            throw new NotImplementedException();
         }
 
         public void onStart()
         {
-            throw new NotImplementedException();
+            int damage = ((BasicCreature)creature).Damage;
         }
 
         public void prepare()
         {
-            throw new NotImplementedException();
+            int damage = ((BasicCreature)creature).Damage;
         }
+
     }
 }

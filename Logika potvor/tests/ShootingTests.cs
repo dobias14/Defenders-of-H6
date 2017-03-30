@@ -11,7 +11,7 @@ namespace CreaturesTests
         public void TestShootingChangeToDying()
         {
             int damage = 10, hp = 100;
-            ICreature creature = new BasicCreature(null, null, null, damage, hp);
+            ICreature creature = new BasicCreature(null, null, null, damage, hp, null);
             Status shooting = creature.getShooting();
             Status dying = creature.getDying();
 
