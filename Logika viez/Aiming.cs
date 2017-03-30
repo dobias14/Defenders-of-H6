@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
-    class Aiming : Status
+    public class Aiming : Status
     {
         public Boolean isReady = false;
 
