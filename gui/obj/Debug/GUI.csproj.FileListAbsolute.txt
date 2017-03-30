@@ -1,0 +1,16 @@
+C:\Users\Patricia\Documents\SharpDevelop Projects\GUI\GUI\bin\Debug\GUI.exe.config
+C:\Users\Patricia\Documents\SharpDevelop Projects\GUI\GUI\bin\Debug\GUI.exe
+C:\Users\Patricia\Documents\SharpDevelop Projects\GUI\GUI\bin\Debug\GUI.pdb
+C:\Users\Patricia\Documents\SharpDevelop Projects\GUI\GUI\obj\Debug\GUI.csprojResolveAssemblyReference.cache
+C:\Users\Patricia\Documents\SharpDevelop Projects\GUI\GUI\obj\Debug\GUI.exe
+C:\Users\Patricia\Documents\SharpDevelop Projects\GUI\GUI\obj\Debug\GUI.pdb
+C:\Users\Patricia\Documents\SharpDevelop Projects\GUI\GUI\obj\Debug\GUI.MainForm.resources
+C:\Users\Patricia\Documents\SharpDevelop Projects\GUI\GUI\obj\Debug\GUI.csproj.GenerateResource.Cache
+H:\gui\bin\Debug\GUI.exe.config
+H:\gui\obj\Debug\GUI.exe
+H:\gui\obj\Debug\GUI.pdb
+H:\gui\bin\Debug\GUI.exe
+H:\gui\bin\Debug\GUI.pdb
+H:\gui\obj\Debug\GUI.csprojResolveAssemblyReference.cache
+H:\gui\obj\Debug\GUI.MainForm.resources
+H:\gui\obj\Debug\GUI.csproj.GenerateResource.Cache
