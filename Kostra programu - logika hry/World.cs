@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DefendersOfH6
 {
-    class World
+    public class World
     {
         private List<ThinkingObject> arrayOfObjectInGame = new List<ThinkingObject>();
         private RoundGovernor manazerKola = null;
