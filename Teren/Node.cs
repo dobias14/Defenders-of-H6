@@ -73,5 +73,9 @@ namespace DefendersOfH6
 		public override string ToString(){
 			return "ID: "+id+", X: "+x+", Y: "+y+", T: "+terrain;
 		}
+		
+		public List<Node> getNeighbours() { 
+			return neighbours;
+		}
 	}
 }
