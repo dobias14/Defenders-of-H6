@@ -87,6 +87,29 @@ namespace CreaturesTests
             }
         }
 
-       
+        [TestMethod]
+        public void TestPathFinder()
+        {
+            Graph graph = new Graph(10,10);
+            Node startDestinaton = graph.getNode(1, 1);
+            Node finalDestination = graph.getNode(5, 5);
+            System.Diagnostics.Debug.WriteLine(startDestinaton);
+
+            BasicCreature creature = new BasicCreature(startDestinaton, finalDestination, graph, 100, 100, null);
+            Mooving mooving = (Mooving)creature.getMoovnig();
+            mooving.onStart();
+
+            Node lastPosition = null;
+            while (lastPosition != creature.getPosition())     //ked sa rovnaju posledny node a aktualny, znamena ze sa uz nehybem dalej
+            {
+                lastPosition = creature.getPosition();
+                //najdi novu poziciu
+                mooving.prepare();
+                creature.action();
+                System.Diagnostics.Debug.WriteLine(creature.getPosition());    //debug vypis noveho nodu
+            }
+            Assert.AreEqual(finalDestination, creature.getPosition());
+        }
+
     }
 }
