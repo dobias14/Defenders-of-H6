@@ -25,7 +25,7 @@ namespace DefendersOfH6
             this.creature = creature;
             this.finalDestinantion = finalDestinantion;
             this.graph = graph;
-            this.nextPosition = null;
+            this.nextPosition = creature.getPosition();
         }
         
         public Status changeStatus()
@@ -34,13 +34,9 @@ namespace DefendersOfH6
             {
                 return this.creature.getDying();
             }
-
-            foreach(Node neighbour in this.creature.getPosition().getNeighbours())
+            if (this.creature.getPosition() == finalDestinantion)
             {
-                if(neighbour == finalDestinantion)
-                {
-                    return this.creature.getShooting();
-                }
+                return this.creature.getShooting();
             }
             return null;
         }
@@ -79,7 +75,12 @@ namespace DefendersOfH6
             {
                 throw new InvalidOperationException(PATH_DOES_NOT_EXISTS);
             }
-            nextPosition = path[0];
+            int lastItem = path.Count - 1;
+            if (lastItem >= 0)
+            {
+                nextPosition = path[lastItem];
+            }
+            
         }
 
         public void onEnd()
