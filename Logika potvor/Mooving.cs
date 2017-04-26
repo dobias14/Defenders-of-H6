@@ -17,6 +17,9 @@ namespace DefendersOfH6
         private Node finalDestinantion;
         private Graph graph;
 
+        private List<Node> path;
+        private int index;
+
         private Node nextPosition;
         public Node NextPosition { get { return this.nextPosition; } }
 
@@ -26,6 +29,8 @@ namespace DefendersOfH6
             this.finalDestinantion = finalDestinantion;
             this.graph = graph;
             this.nextPosition = creature.getPosition();
+            this.path = null;
+            this.index = 0;
         }
         
         public Status changeStatus()
@@ -63,28 +68,67 @@ namespace DefendersOfH6
             {
                 throw new InvalidOperationException(INCORRECT_GRAPH_DISTANCE);
             }
+
+            
+            calcPath();
+            
         }
 
         public void prepare()
         {
-            List<Node> path = new Dijkstra(finalDestinantion, creature.getPosition(), graph)
-                                    .initialization()
-                                    .algorithm()
-                                    .getPath();
-            if (path == null)
-            {
-                throw new InvalidOperationException(PATH_DOES_NOT_EXISTS);
-            }
-            int lastItem = path.Count - 1;
-            if (lastItem >= 0)
-            {
-                nextPosition = path[lastItem];
-            }
-            
+             mooveOnNextNode();
+
         }
 
         public void onEnd()
         {
+        }
+
+        private void mooveOnNextNode()
+        {
+            if (path == null)
+            {
+                throw new InvalidOperationException(PATH_DOES_NOT_EXISTS);
+            }
+            if (index >= 0)
+            {
+                if (newPathIsNeeded())
+                {
+                    calcPath();
+                }
+                else
+                {
+                    nextPosition = path[index];
+                    index--;
+                }
+            }
+        }
+
+        private Boolean newPathIsNeeded()
+        {
+            Boolean newPathIsNeeded = true;
+            foreach (Node node in nextPosition.getNeighbours())
+            {
+                if (node == path[index])
+                {
+                    newPathIsNeeded = false;
+                    break;
+                }
+            }
+            if (path[index].isEnable() == false)
+            {
+                newPathIsNeeded = true;
+            }
+            return newPathIsNeeded;
+        }
+
+        private void calcPath()
+        {
+            path = new Dijkstra(finalDestinantion, creature.getPosition(), graph)
+                                    .initialization()
+                                    .algorithm()
+                                    .getPath();
+            this.index = path.Count - 1;
         }
         
         private class Dijkstra
