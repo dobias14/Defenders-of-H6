@@ -2,26 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DefendersOfH6
 {
     public class RoundGovernor
     {
-        volatile bool running = false;
-        private Form1 form1;
+        public static  volatile bool running;
+        Graphics g;
         volatile private int sleepingTimeLength = 17;//60 fps
 
-        List<ThinkingObject> arrayOfObject;
+        private List<ThinkingObject> arrayOfObject;
+
+        ICollection myCollection;
 
 
-        public RoundGovernor(bool isRunning, List<ThinkingObject> arrayOfObjectInGame)
+        public RoundGovernor(bool isRunning,ref List<ThinkingObject> arrayOfObjectInGame, Graphics g)
         {
             running = isRunning;
-            form1 = null;
+            this.g = g;
             this.arrayOfObject = arrayOfObjectInGame;
+
+            myCollection = ArrayList.Synchronized(arrayOfObject);
         }
 
         public void nastavFPS( double pocetFPS) {
@@ -39,33 +45,45 @@ namespace DefendersOfH6
             this.sleepingTimeLength = newTime;
         }
 
+        public void setArray(List<ThinkingObject> newArray)
+        {
+
+            // myCollection = ArrayList.Synchronized(arrayOfObject);
+
+            lock (myCollection.SyncRoot)
+            {
+                arrayOfObject = newArray;
+            }
+
+        }
+
 
         public void run()
         {
-            ICollection myCollection = ArrayList.Synchronized(arrayOfObject);
+            //myCollection = ArrayList.Synchronized(arrayOfObject);
             while (running){
-                World.addOneTick();
+                //World.addOneTick();
                 Thread.Sleep(sleepingTimeLength);
 
                 lock (myCollection.SyncRoot) {
+                    
+                    
                     foreach (ThinkingObject objectinGame in arrayOfObject)
                     {
                         objectinGame.thinking();
-                    }
-
+                    }                    
                     foreach (ThinkingObject objectinGame in arrayOfObject)
                     {
                         objectinGame.action();
                     }
 
+                    g.Clear(Color.White);
+
                     foreach (ThinkingObject objectinGame in arrayOfObject)
                     {
-                        objectinGame.draw();
+                       
+                        objectinGame.draw(g);
                     }
-                }
-                if (form1 != null)
-                {
-                    form1.Invalidate();
                 }
             }
         }
