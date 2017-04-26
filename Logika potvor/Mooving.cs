@@ -1,234 +1,129 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace DefendersOfH6
 {
-    public class Mooving : Status
+    public class BasicCreature : ThinkingObject, ICreature
     {
 
-        public static string NULL_POSITION = "creature position is null";
-        public static string NULL_DESTINATION = "final destination is null";
-        public static string NULL_GRAPH = "graph is null";
-        public static string NULL_GRAPH_NODES = "graph nodes are null";
-        public static string INCORRECT_GRAPH_DISTANCE = "graph distence is less or equal then 0";
-        public static string PATH_DOES_NOT_EXISTS = "path does not exists";
+        public static string NEGATIVE_DAMAGE = "negative damage";
 
-        private ICreature creature;
-        private Node finalDestinantion;
-        private Graph graph;
 
-        private List<Node> path;
-        private int index;
+        public List<Node> path;
 
-        private Node nextPosition;
-        public Node NextPosition { get { return this.nextPosition; } }
+        private Node position;
+        public Node Position { get { return position; } set { position = value; } }
 
-        public Mooving(ICreature creature, Node finalDestinantion, Graph graph)
+        private int damage;
+        public int Damage { get { return damage; } set { damage = value; } }
+
+        private int hp;
+        public int Hp { get { return hp; } set { hp = value; } }
+
+        private World world;
+        
+        private Status shooting;
+        private Status mooving;
+        private Status dying;
+
+        public BasicCreature(Node position, Node finalDestinantion, Graph graph, int damage, int hp, World world)
         {
-            this.creature = creature;
-            this.finalDestinantion = finalDestinantion;
-            this.graph = graph;
-            this.nextPosition = creature.getPosition();
-            this.path = null;
-            this.index = 0;
+            this.position = position;
+            this.damage = damage;
+            this.hp = hp;
+
+            this.world = world;
+            
+            this.shooting = new Shooting(this);
+            this.mooving = new Mooving(this, finalDestinantion, graph);
+            this.dying = new Dying(this);
+
+            base.presentStatus = null;
+
+            commandNewBugToMove();
+        }
+
+        private void commandNewBugToMove() {
+            if (base.presentStatus != null) {
+                return;
+            }
+            base.presentStatus = mooving;
+
+            mooving.onStart();
         }
         
-        public Status changeStatus()
-        {
-            if (this.creature.isDead())
-            {
-                return this.creature.getDying();
-            }
-            if (this.creature.getPosition() == finalDestinantion)
-            {
-                return this.creature.getShooting();
-            }
-            return null;
-        }
-
-        public void onStart()
-        {
-            if(this.creature.getPosition() == null)
-            {
-                throw new NullReferenceException(NULL_POSITION);
-            }
-            if(this.finalDestinantion == null)
-            {
-                throw new NullReferenceException(NULL_DESTINATION);
-            }
-            if (this.graph == null)
-            {
-                throw new NullReferenceException(NULL_GRAPH);
-            }
-            if (this.graph.getNodes() == null)
-            {
-                throw new NullReferenceException(NULL_GRAPH_NODES);
-            }
-            if( this.graph.getDistance() <= 0)
-            {
-                throw new InvalidOperationException(INCORRECT_GRAPH_DISTANCE);
-            }
-
-            
-            calcPath();
-            
-        }
-
-        public void prepare()
-        {
-             mooveOnNextNode();
-
-        }
-
-        public void onEnd()
-        {
-        }
-
-        private void mooveOnNextNode()
-        {
-            if (path == null)
-            {
-                throw new InvalidOperationException(PATH_DOES_NOT_EXISTS);
-            }
-            if (index >= 0)
-            {
-                if (newPathIsNeeded())
-                {
-                    calcPath();
-                }
-                else
-                {
-                    nextPosition = path[index];
-                    index--;
-                }
-            }
-        }
-
-        private Boolean newPathIsNeeded()
-        {
-            Boolean newPathIsNeeded = true;
-            foreach (Node node in nextPosition.getNeighbours())
-            {
-                if (node == path[index])
-                {
-                    newPathIsNeeded = false;
-                    break;
-                }
-            }
-            if (path[index].isEnable() == false)
-            {
-                newPathIsNeeded = true;
-            }
-            return newPathIsNeeded;
-        }
-
-        private void calcPath()
-        {
-            path = new Dijkstra(finalDestinantion, creature.getPosition(), graph)
-                                    .initialization()
-                                    .algorithm()
-                                    .getPath();
-            this.index = path.Count - 1;
-        }
         
-        private class Dijkstra
+        public override void action()
         {
-
-            private Node finalDestinaton;
-            private Node position;
-            private Graph graph;
-
-            private List<Node> nodes;
-            private List<Node> path;
-            private Dictionary<Node, Node> previous;
-            private Dictionary<Node, int> distances;
-
-
-            public Dijkstra(Node finalDestinaton, Node position, Graph graph)
+            if(base.presentStatus.GetType() == typeof(Mooving))
             {
-                this.finalDestinaton = finalDestinaton;
-                this.position = position;
-                this.graph = graph;
-
-                this.nodes = new List<Node>();
-                this.previous = new Dictionary<Node, Node>();
-                this.distances = new Dictionary<Node, int>();
-            }
-
-            public Dijkstra initialization()
-            {
-                foreach (Node node in graph.getNodes())
+                Node nextPosition = ((Mooving)mooving).NextPosition;
+                if (nextPosition.isEnable())
                 {
-                    if (node == position)
-                    {
-                        distances[node] = 0;
-                    }
-                    else
-                    {
-                        if (node.isEnable())
-                        {
-                            distances[node] = int.MaxValue;
-                        }
-                    }
-                    nodes.Add(node);
-                }
-                return this;
-            }
-
-            public List<Node> getPath()
-            {
-                return this.path;
-            }
-
-            public Dijkstra algorithm()
-            {
-                while (nodes.Count != 0)
-                {
-                    nodes.Sort((x, y) => distances[x] - distances[y]);
-
-                    Node smallest = nodes[0];
-                    nodes.Remove(smallest);
-
-                    if (isDestination(smallest))
-                    {
-                        break;
-                    }
-                    if (distances[smallest] == int.MaxValue)
-                    {
-                        break;
-                    }
-                    calcDistanceForNeighbors(smallest);
-                }
-                return this;
-            }
-
-            private Boolean isDestination(Node smallest)
-            {
-                if (smallest == finalDestinaton)
-                {
-                    path = new List<Node>();
-                    while (previous.ContainsKey(smallest))
-                    {
-                        path.Add(smallest);
-                        smallest = previous[smallest];
-                    }
-                    return true;
-                }
-                return false;
-            }
-
-            private void calcDistanceForNeighbors(Node smallest)
-            {
-                foreach (Node neighbor in smallest.getNeighbours())
-                {
-                    int alt = distances[smallest] + graph.getDistance();
-                    if (alt < distances[neighbor])
-                    {
-                        distances[neighbor] = alt;
-                        previous[neighbor] = smallest;
-                    }
+                    this.position = nextPosition;
                 }
             }
+            else if(base.presentStatus.GetType() == typeof(Shooting))
+            {
+                int doDamage = ((Shooting)shooting).Damage;
+                world.doDamegeToH6Server(doDamage);
+            }
+            else if(base.presentStatus.GetType() == typeof(Dying))
+            {
+                //do nothing
+            }
+        }
+
+        public int ReciveDamage(int damage)
+        {
+            if(damage < 0)
+            {
+                throw new ArgumentOutOfRangeException(NEGATIVE_DAMAGE);
+            }
+            this.hp -= damage;
+            return hp;
+        }
+
+        public Boolean isDead()
+        {
+            if (hp <= 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public Status getDying()
+        {
+            return this.dying;
+        }
+
+        public Status getShooting()
+        {
+            return this.shooting;
+        }
+
+        public Status getMoovnig()
+        {
+            return this.mooving;
+        }
+
+        public Node getPosition()
+        {
+            return this.position;
+        }
+
+        public override void draw(Graphics g)
+        {
+            if (base.presentStatus.GetType() != typeof(Dying))
+            {
+                g.FillEllipse(Brushes.Blue, position.getX(), position.getY(), 10, 10);
+            }
+            else {
+                g.FillEllipse(Brushes.Red, position.getX(), position.getY(), 10, 10);
+            }
+            
         }
     }
 }
