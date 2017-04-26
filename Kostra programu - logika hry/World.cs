@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Collections;
 
 namespace DefendersOfH6
 {
@@ -15,24 +17,39 @@ namespace DefendersOfH6
 
         private int lifeOfH6ServerPc = 0;
         private int score = 0;
+        private int actualFPS = 60;
+
+        private Graphics g;
 
 
-        public World(List<ThinkingObject> objectInGame, int startingLifeOfH6Server){
-            manazerKola = new RoundGovernor(true, arrayOfObjectInGame);
-            thread = new Thread(new ThreadStart(manazerKola.run));
+        /*
+        public World(ref  List<ThinkingObject> objectInGame, int startingLifeOfH6Server,Graphics g){
             arrayOfObjectInGame = objectInGame;
+            this.g = g;
 
             setLifeOfH6ServerPc(startingLifeOfH6Server);
+            setScore(500);
+        }
+        */
+
+        public World(ref List<ThinkingObject> objectInGame, int startingLifeOfH6Server, int startingScore, Graphics g)
+        {
+            arrayOfObjectInGame = objectInGame;
+            this.g = g;
+
+            setLifeOfH6ServerPc(startingLifeOfH6Server);
+            setScore(startingScore);
         }
 
         private void startThread() {
             if (manazerKola == null) {
-                manazerKola = new RoundGovernor(true, arrayOfObjectInGame);
+                manazerKola = new RoundGovernor(true, ref arrayOfObjectInGame, g);
             }
             if (thread == null) {
                 thread = new Thread(new ThreadStart(manazerKola.run));
             }
 
+            manazerKola.nastavFPS(actualFPS);
             // Start the thread
             thread.Start();
 
@@ -43,6 +60,7 @@ namespace DefendersOfH6
 
         private void stopThread() {
             manazerKola.stopThread();
+            RoundGovernor.running = false;
             thread.Join();
             thread = null;
             manazerKola = null;
@@ -50,6 +68,7 @@ namespace DefendersOfH6
 
         public void zacniKolo() {
             startThread();
+            Thread.Sleep(1);
         }
 
         public void skonciKolo() {
@@ -83,12 +102,38 @@ namespace DefendersOfH6
             score += scoreToAdd;
         }
 
+        public void substractFromScore(int costOfTower)
+        {
+            score -= costOfTower;
+        }
+
         public void resetScore(){
             score = 0;
         }
 
         public int getScore(){
             return score;
+        }
+
+
+
+        public void setArray(List<ThinkingObject> newArray)
+        {
+
+            ICollection myCollection = ArrayList.Synchronized(arrayOfObjectInGame);
+
+            lock (myCollection.SyncRoot)
+            {
+                arrayOfObjectInGame = newArray;
+            }
+            
+        }
+
+        public void setFPS(int newFPS) {
+            actualFPS = newFPS;
+            if (manazerKola != null) {
+                manazerKola.nastavFPS(newFPS);
+            }
         }
 
 
