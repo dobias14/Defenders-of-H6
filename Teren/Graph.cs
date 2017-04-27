@@ -122,5 +122,13 @@ namespace DefendersOfH6
 		public int getFinalTargetLocation(){
 			return target;
 		}
+		
+		public override void draw(Graphics g){
+			for (int i = 0; i < width; i++){
+				for (int j = 0; j < height; j++){
+					nodes[i,j].draw(g);
+			    }
+	        }
+        }
 	}
 }

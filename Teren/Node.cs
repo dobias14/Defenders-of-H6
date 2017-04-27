@@ -77,8 +77,29 @@ namespace DefendersOfH6
 			return "ID: "+id+", X: "+x+", Y: "+y+", T: "+terrain;
 		}
 		
-		public List<Node> getNeighbours() { 
+		public List<Node> getNeighbours() {
 			return neighbours;
 		}
+		
+		public override void draw(Graphics g)
+        {
+        	switch (terrain){
+				case 0:
+					g.FillEllipse(Color.FromArgb(224,224,224), x, y, 10, 10); // floor
+					break;
+		        case 1:
+		        	g.FillEllipse(Color.FromArgb(153,76,0), x, y, 10, 10); // table
+		            break;
+		        case 2:
+		        	g.FillEllipse(Color.FromArgb(96,96,96), x, y, 10, 10); // computer
+		            break;
+		        case 3:
+		        	g.FillEllipse(Color.FromArgb(0,0,0), x, y, 10, 10); // wall
+		        	break;
+		        default:
+		        	g.FillEllipse(Color.FromArgb(224,224,224), x, y, 10, 10);  // floor
+		        	break;
+		    }         
+        }
 	}
 }
