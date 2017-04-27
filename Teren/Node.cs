@@ -47,7 +47,10 @@ namespace DefendersOfH6
 		}
 		
 		public void enableNode(List<Node> nodes){
-			throw new NotImplementedException();
+			if(neighbours.Count > 0){
+				disableNode();
+			}
+			neighbours = nodes;
 		}
 
 		public int getTerrain(){

@@ -64,11 +64,31 @@ namespace DefendersOfH6
 		}
 		
 		public void enableNode(int x, int y){
-			throw new NotImplementedException();
-			/*Node node = nodes[x,y];
+			Node node = nodes[x,y];
+			List<Node> enabledNodes = new List<Node>();
 			if(!node.isEnable()){
-				
-			}*/
+				if(x-1 >= 0){
+					if(nodes[x-1,y].isEnable()){
+						enabledNodes.Add(nodes[x-1,y]);
+					}
+				}
+				if(x+1 < width){
+					if(nodes[x+1,y].isEnable()){
+						enabledNodes.Add(nodes[x+1,y]);
+					}
+				}
+				if(y-1 >= 0){
+					if(nodes[x,y-1].isEnable()){
+						enabledNodes.Add(nodes[x,y-1]);
+					}
+				}
+				if(y+1 < height){
+					if(nodes[x,y+1].isEnable()){
+						enabledNodes.Add(nodes[x,y+1]);
+					}
+				}
+			}
+			node.enableNode(enabledNodes);
 		}
 		
 		public int getWidth(){
