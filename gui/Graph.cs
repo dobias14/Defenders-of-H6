@@ -88,7 +88,7 @@ namespace DefendersOfH6
 		}
 		
 		public void setFinalTargetLocation(int x, int y){
-			target = nodes[x][y].getId();
+			target = nodes[x,y].getId();
 		}
 		
 		public int getFinalTargetLocation(){
