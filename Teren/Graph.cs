@@ -71,6 +71,14 @@ namespace DefendersOfH6
 			}*/
 		}
 		
+		public int getWidth(){
+			return width;
+		}
+		
+		public int getHeight(){
+			return height;
+		}
+		
 		public Node getNode(int x, int y){
 			return nodes[x,y];
 		}
