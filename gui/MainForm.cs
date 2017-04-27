@@ -4,6 +4,8 @@ using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
 using DefendersOfH6;
+using System.IO;
+using System.Text;
 
 namespace GUI {
 	public partial class MainForm : Form {
@@ -78,10 +80,16 @@ namespace GUI {
 		
 		void Button4Click(object sender, EventArgs e) {
 			MessageBox.Show("LOAD GAME");
+
+            string path = "../SAVE.txt";
+            string readText = File.ReadAllText(path);
 		}
 		
 		void Button5Click(object sender, EventArgs e){
 			MessageBox.Show("SAVE GAME");
+
+            string path = "../SAVE.txt";
+            File.WriteAllText(path, "test");
 		}
 
         private void MainForm_Load(object sender, EventArgs e)
