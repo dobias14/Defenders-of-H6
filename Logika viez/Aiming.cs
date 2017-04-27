@@ -4,30 +4,63 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DefendersOfH6
+namespace defemdersNew
 {
     public class Aiming : Status
     {
-        public Boolean isReady = false;
+
+        private ICreature target;
+        public ICreature Target { get { return this.target; } }
+
+   
+        private List<ICreature> creatures;
+        private Graph graph;
+        private ITower tower;
+
+        public Aiming(List<ICreature> creatures, Graph graph, ITower tower)
+        {
+            this.creatures = creatures;
+            this.graph = graph;
+            this.tower = tower;
+            findTarget();
+           
+        }
 
         public Status changeStatus()
         {
-            throw new NotImplementedException();
+        	if (tower.isDead()){
+        		return tower.getDying();
+        	}
+        	else return tower.getAiming();
         }
 
         public void onEnd()
         {
-            throw new NotImplementedException();
+            if (target.isDead())
+            {
+                findTarget();
+            }
         }
 
         public void onStart()
         {
-            throw new NotImplementedException();
         }
 
         public void prepare()
         {
-            throw new NotImplementedException();
+        }
+
+        public void findTarget()
+        {
+            int max = 0;
+            for (int i = 0; i < creatures.Count(); i++)
+            {
+                if (max <= creatures[i].getPosition().getX() + creatures[i].getPosition().getY() && creatures[i].isDead() == false)
+                {
+                    max = creatures[i].getPosition().getX() + creatures[i].getPosition().getY();
+                    target = creatures[i];
+                }
+            }
         }
     }
 }

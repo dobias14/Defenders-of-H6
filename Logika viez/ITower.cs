@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DefendersOfH6
+namespace defemdersNew
 {
    public interface ITower
     {
-        void shoot();
         int receiveDamage(int dmg);
+        int getDamage();
         bool canBePlaced(int x, int y);
-        Node findTarget(Node Position);
+        Node getPosition();
         Boolean isDead();
+        Status getDying();
+        Status getAiming();
     }
 }

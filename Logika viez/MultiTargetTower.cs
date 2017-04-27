@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace defemdersNew
 {
-    public class BasicTower: ThinkingObject, ITower
+    public class MultiTargetTower: ThinkingObject, ITower
     {
         private int damage;
         private int hp;
@@ -18,7 +18,7 @@ namespace defemdersNew
         private Status dying;
         private Status aiming;
 
-        private ICreature target;
+        private List<ICreature> targets;
 
         public int Damage
         {
@@ -47,9 +47,11 @@ namespace defemdersNew
         }
 
 
-        public BasicTower(Node position, Graph graph, int damage, int hp)
+        public MultiTargetTower(Node position, Graph graph, int damage, int hp)
         {
+        	// question - how to get list of all creatures ?
         	List<ICreature> creatures = new List();
+        	targets = creatures;
             this.damage = damage;
             this.hp = hp;
             this.aiming = new Aiming(creatures,graph,this);
@@ -63,8 +65,9 @@ namespace defemdersNew
         {
             if (base.presentStatus.GetType() == typeof(Aiming))
             {
-            	target = (Aiming(aiming)).Target;
-            	target.ReciveDamage(damage);
+            	for(int i=0;i<targets.Count();i++){
+            		targets[i].ReciveDamage(damage);
+            	}
             	
             }
    
