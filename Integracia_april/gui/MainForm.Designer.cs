@@ -59,7 +59,7 @@ namespace GUI
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(939, 308);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(143, 59);
             this.button1.TabIndex = 0;
@@ -70,7 +70,7 @@ namespace GUI
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(939, 10);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(143, 59);
             this.button2.TabIndex = 1;
@@ -81,7 +81,7 @@ namespace GUI
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(939, 374);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(143, 59);
             this.button3.TabIndex = 2;
@@ -92,7 +92,7 @@ namespace GUI
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(939, 443);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(143, 59);
             this.button4.TabIndex = 3;
@@ -103,7 +103,7 @@ namespace GUI
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(939, 512);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(143, 59);
             this.button5.TabIndex = 4;
@@ -132,7 +132,7 @@ namespace GUI
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(939, 216);
-            this.button6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(143, 59);
             this.button6.TabIndex = 7;
@@ -158,7 +158,6 @@ namespace GUI
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(120, 84);
             this.listBox1.TabIndex = 9;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged_1);
             // 
             // labelToListBox
             // 
@@ -187,7 +186,7 @@ namespace GUI
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Defenders of H6";
             this.Load += new System.EventHandler(this.MainForm_Load);
