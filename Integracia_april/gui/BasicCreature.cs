@@ -116,12 +116,17 @@ namespace DefendersOfH6
 
         public override void draw(Graphics g)
         {
-            if (base.presentStatus.GetType() != typeof(Dying))
+            if (base.presentStatus.GetType() == typeof(Dying))
+            {
+                g.FillEllipse(Brushes.Red, position.getX(), position.getY(), 10, 10);
+            }
+            else if (base.presentStatus.GetType() == typeof(Shooting))
+            {
+                g.FillEllipse(Brushes.Green, position.getX(), position.getY(), 10, 10);
+            }
+            else
             {
                 g.FillEllipse(Brushes.Blue, position.getX(), position.getY(), 10, 10);
-            }
-            else {
-                g.FillEllipse(Brushes.Red, position.getX(), position.getY(), 10, 10);
             }
             
         }
