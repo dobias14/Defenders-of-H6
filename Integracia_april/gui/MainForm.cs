@@ -30,12 +30,15 @@ namespace GUI {
 
         }
 		void Button1Click(object sender, EventArgs e) {
+            if (!is_start) { 
 			is_start = true;
 
+            world.setDifficultyForNextRound((World.Difficulty)listBox1.SelectedIndex);
             world.zacniKolo();
-            //graph = new Graph(1000,1000);
+                //graph = new Graph(1000,1000);
+            }
 
-		}
+        }
 		
 		void Button2Click(object sender, EventArgs e) {
 			if (is_start) {
@@ -111,13 +114,6 @@ namespace GUI {
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            /*
-            g = CreateGraphics();
-            Console.WriteLine("vonku");
-            Console.WriteLine(things.Count);
-            world = new World(things, 100, g);
-            Console.WriteLine("juhu");
-       */
 
         }
 
@@ -129,16 +125,6 @@ namespace GUI {
 
             }
 
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            world.setDifficultyForNextRound((World.Difficulty)listBox1.SelectedIndex);
         }
     }
 }
