@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Drawing;
@@ -23,8 +23,10 @@ namespace GUI {
             g = CreateGraphics();
             graph = new Graph(20, 20);
 
-            world = new World(ref things, World.Difficulty.Insane, g, graph);
+            world = new World(ref things, World.Difficulty.Easy, g, graph);
             label1.Text = world.getScore()+"";
+
+            listBox1.Items.AddRange(Enum.GetNames(typeof(World.Difficulty)));
 
         }
 		void Button1Click(object sender, EventArgs e) {
@@ -127,6 +129,16 @@ namespace GUI {
 
             }
 
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            world.setDifficultyForNextRound((World.Difficulty)listBox1.SelectedIndex);
         }
     }
 }
