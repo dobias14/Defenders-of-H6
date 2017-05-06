@@ -54,25 +54,21 @@ namespace DefendersOfH6
                 case World.Difficulty.Easy:
                 {
                         howManyToSpawn = 5;
-                        timeTillNextSpawn = 300;
                         break;
                 }
                 case World.Difficulty.Regular:
                     {
                         howManyToSpawn = 10;
-                        timeTillNextSpawn = 250;
                         break;
                     }
                 case World.Difficulty.Hard:
                     {
                         howManyToSpawn = 15;
-                        timeTillNextSpawn = 200;
                         break;
                     }
                 case World.Difficulty.Insane:
                     {
                         howManyToSpawn = 100;
-                        timeTillNextSpawn = 100;
                         break;
                     }
                 case World.Difficulty.None:
@@ -80,6 +76,7 @@ namespace DefendersOfH6
                         break;
                     }        
             }
+            timeTillNextSpawn = 30;
         }
 
         private void resetTimeTillNextSpawn() {
