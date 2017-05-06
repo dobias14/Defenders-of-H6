@@ -26,6 +26,7 @@ namespace DefendersOfH6
 
         private int lifeOfH6ServerPc = 0;
         private int score = 0;
+        private int pointsForOneBug = 0;
         private int actualFPS = 60;
         private Difficulty difficultyOfRound = Difficulty.None;
 
@@ -61,7 +62,6 @@ namespace DefendersOfH6
         public void skonciKolo()
         {
             stopThread();
-            int pointsForOneBug = 100;
             addToScore(vycistiPlochuOdMrtvol() * pointsForOneBug);
         }
 
@@ -164,29 +164,35 @@ namespace DefendersOfH6
 
         private void setLifeOfH6ServerPcANDsetScore(){
             int newLife = 0;
+            int newScoreValueOfBug = 0;
+            int newScore = 0;
             switch (difficultyOfRound){
                 case Difficulty.Easy:
                     {
                         newLife = 500;
-                        score = 5000;
+                        newScore = 5000;
+                        newScoreValueOfBug = 100;
                         break;
                     }
                 case Difficulty.Regular:
                     {
                         newLife = 300;
-                        score = 1000;
+                        newScore = 1000;
+                        newScoreValueOfBug = 50;
                         break;
                     }
                 case Difficulty.Hard:
                     {
                         newLife = 100;
-                        score = 500;
+                        newScore = 500;
+                        newScoreValueOfBug = 10;
                         break;
                     }
                 case Difficulty.Insane:
                     {
                         newLife = 1;
-                        score = 100;
+                        newScore = 100;
+                        newScoreValueOfBug = 1;
                         break;
                     }
                 case Difficulty.None:
@@ -195,6 +201,8 @@ namespace DefendersOfH6
                     }
             }
             lifeOfH6ServerPc = newLife;
+            score = newScore;
+            pointsForOneBug = newScoreValueOfBug;
         }
 
     }
