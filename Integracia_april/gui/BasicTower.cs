@@ -14,6 +14,7 @@ namespace DefendersOfH6
         private int hp;
         private Node position;
         public Node Position { get { return position; } set { position = value; } }
+        private World world;
 
         private Status dying;
         private Status aiming;
@@ -47,31 +48,42 @@ namespace DefendersOfH6
         }
 
 
-        public BasicTower(Node position, Graph graph, int damage, int hp)
+        public BasicTower(Node position, Graph graph, int damage, int hp, World world)
         {
-        	List<ICreature> creatures = new List < ICreature >();
             this.damage = damage;
+            this.world = world;
             this.hp = hp;
-            this.aiming = new Aiming(creatures,graph,this);
+            this.aiming = new Aiming(world.arrayOfObjectInGame,graph,this);
             this.position = position;
-            
-            base.presentStatus = aiming;
+            base.presentStatus = null;
+            startShooting();
 
             //base.presentStatus.onStart();
 
         }
 
+        private void startShooting()
+        {
+            if (base.presentStatus != null)
+            {
+                return;
+            }
+            base.presentStatus = aiming;
+
+            aiming.onStart();
+        }
+
         public override void action()
         {
-            if (base.presentStatus.GetType() == typeof(Aiming))
-                //presentStatus is Aiming //lepsie :-)
+            if (presentStatus is Aiming)
+
             {
-            	//target = ((Aiming)(aiming)).Target;
-            	//target.ReciveDamage(damage);
+            	target = ((Aiming)(aiming)).Target;
+            	target.ReciveDamage(damage);
             	
             }
    
-            else if (base.presentStatus.GetType() == typeof(Dying))
+            else if (presentStatus is Dying)
             {
                 //do nothing
             }
@@ -101,7 +113,6 @@ namespace DefendersOfH6
 
         public override void draw(Graphics g)
         {
-            //g.DrawString("I AM TOWER", new Font("Comic Sans MS", 15), Brushes.Red,position.getX(),position.getY());
             g.FillEllipse(Brushes.Orange, position.getX(), position.getY(), 10, 10);
         }
 

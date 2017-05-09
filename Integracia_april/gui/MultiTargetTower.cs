@@ -16,6 +16,7 @@ namespace DefendersOfH6
         public Node Position { get { return position; } set { position = value; } }
 
         private Status dying;
+        private World world;
         private Status aiming;
 
         private List<ICreature> targets;
@@ -47,14 +48,15 @@ namespace DefendersOfH6
         }
 
 
-        public MultiTargetTower(Node position, Graph graph, int damage, int hp)
+        public MultiTargetTower(Node position, Graph graph, int damage, int hp, World world)
         {
         	// question - how to get list of all creatures ?
         	List<ICreature> creatures = new List<ICreature>();
         	targets = creatures;
+            this.world = world;
             this.damage = damage;
             this.hp = hp;
-            this.aiming = new Aiming(creatures,graph,this);
+            this.aiming = new Aiming(world.arrayOfObjectInGame, graph,this);
             this.position = position;
             
             base.presentStatus = aiming;

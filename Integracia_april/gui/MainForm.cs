@@ -57,15 +57,22 @@ namespace GUI {
             {
                 //g.FillEllipse(Brushes.Red, 50, 50, 20, 20);
                 ICollection myCollection = ArrayList.Synchronized(things);
-                BasicTower t1 = new BasicTower(n, graph, 100, 100);
+                BasicTower t1 = new BasicTower(n, graph, 20, 100, world);
 
-                t1.thinking();
+                //t1.thinking();
                 //t1.action();
                 //t1.draw(g);
 
                 graph.disableNode(e.X / 10, e.Y / 10);
                 lock (myCollection.SyncRoot) { 
-                    things.Add(t1);
+                    if(n.getTerrain() == 1) // ak je teren stol
+                    {
+                        things.Add(t1);
+                    }
+                    else
+                    {
+                        Console.WriteLine("sem nemoze veza");
+                    }
                     //Console.WriteLine(things.Count+"DELETE");
                 }
                 build_tower = false;
