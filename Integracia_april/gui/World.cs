@@ -83,6 +83,11 @@ namespace DefendersOfH6
             return lifeOfH6ServerPc < 0;
         }
 
+        public void showEndOfTheGame() {
+            System.Console.WriteLine("H6 server has been destroyed.");
+            //throw new System.NotImplementedException("H6 server has been destroyed.");            
+        }
+
         public void addToScore(int scoreToAdd)
         {
             score += scoreToAdd;
@@ -131,7 +136,11 @@ namespace DefendersOfH6
 
 
         private void startThread() {
-            if (difficultyOfRound == Difficulty.None) {
+            if (difficultyOfRound == Difficulty.None ) {
+                if (isH6ServerDead())
+                {
+                    System.Console.WriteLine("H6 server has been destroyed.");
+                }
                 return;
             }
             if (manazerKola == null) {
