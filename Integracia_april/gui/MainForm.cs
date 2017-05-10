@@ -8,47 +8,57 @@ using System.IO;
 using System.Text;
 
 namespace GUI {
-	public partial class MainForm : Form {
-		public bool build_tower;
+    public partial class MainForm : Form {
+        public bool build_tower;
         public bool build_bug;
-		public bool is_start;
+        public bool is_start;
+
+        //public MessageBox 
 
         public World world;
         public Graph graph;
         List<ThinkingObject> things = new List<ThinkingObject>();
         Graphics g;
         public MainForm() {
-			InitializeComponent();
+            InitializeComponent();
 
             g = CreateGraphics();
             graph = new Graph(20, 20);
+            //graph.setFinalTargetLocation(10, 10);
 
             world = new World(ref things, World.Difficulty.Easy, g, graph);
-            label1.Text = world.getScore()+"";
+            label1.Text = world.getScore() + "";
 
             listBox1.Items.AddRange(Enum.GetNames(typeof(World.Difficulty)));
 
         }
-		void Button1Click(object sender, EventArgs e) {
-            if (!is_start) { 
-			is_start = true;
+        void Button1Click(object sender, EventArgs e) {
+            if (!is_start) {
+                is_start = true;
 
-            world.setDifficultyForNextRound((World.Difficulty)listBox1.SelectedIndex);
-            world.zacniKolo();
+                world.setDifficultyForNextRound((World.Difficulty)listBox1.SelectedIndex);
+                world.zacniKolo();
                 //graph = new Graph(1000,1000);
             }
 
         }
-		
-		void Button2Click(object sender, EventArgs e) {
-			if (is_start) {
-				build_tower = true;	
-                		
-			}
-		}
 
-		void MainFormMouseUp(object sender, MouseEventArgs e) {
-	
+        void Button2Click(object sender, EventArgs e) {
+            if (is_start) {
+                build_tower = true;
+
+            }
+        }
+
+        void MainFormMouseUp(object sender, MouseEventArgs e) {
+
+            if (graph.getHeight() <= e.Y / 10 ||
+                graph.getWidth() <= e.X / 10
+                )
+            {
+                return;
+            }
+
             Node n = graph.getNode(e.X / 10, e.Y / 10);
             //Node k = graph.getNode(50, 50);
             
@@ -77,7 +87,7 @@ namespace GUI {
                 }
                 build_tower = false;
                 world.substractFromScore(100);
-                label1.Text = world.getScore() + "";
+                setScoreAndShow();
             }
 
             
@@ -102,6 +112,8 @@ namespace GUI {
                     MessageBox.Show("H6 server has been destroyed.");
                 }
                 world.skonciKolo();
+
+                setScoreAndShow();
 			}
 		}
 		
@@ -132,6 +144,11 @@ namespace GUI {
 
             }
 
+        }
+
+        private void setScoreAndShow()
+        {
+            label1.Text = world.getScore() + "";
         }
     }
 }
