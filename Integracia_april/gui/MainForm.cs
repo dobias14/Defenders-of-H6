@@ -87,7 +87,7 @@ namespace GUI {
                 }
                 build_tower = false;
                 world.substractFromScore(100);
-                setScoreAndShow();
+                showActualScoreValue();
             }
 
             
@@ -113,7 +113,7 @@ namespace GUI {
                 }
                 world.skonciKolo();
 
-                setScoreAndShow();
+                showActualScoreValue();
 			}
 		}
 		
@@ -146,7 +146,7 @@ namespace GUI {
 
         }
 
-        private void setScoreAndShow()
+        private void showActualScoreValue()
         {
             label1.Text = world.getScore() + "";
         }
