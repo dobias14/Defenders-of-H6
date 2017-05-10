@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -53,7 +53,7 @@ namespace DefendersOfH6
             this.damage = damage;
             this.world = world;
             this.hp = hp;
-            this.aiming = new Aiming(world.arrayOfObjectInGame,graph,this);
+            this.aiming = new Aiming(world.getarrayOfObjectInGame(),graph,this);
             this.position = position;
             base.presentStatus = null;
             startShooting();
