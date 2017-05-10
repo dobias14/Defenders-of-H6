@@ -20,7 +20,7 @@ namespace DefendersOfH6
         private ICollection myCollection;
 
 
-        public List<ThinkingObject> arrayOfObjectInGame = new List<ThinkingObject>();
+        private List<ThinkingObject> arrayOfObjectInGame = new List<ThinkingObject>();
         private RoundGovernor manazerKola = null;
         private Thread thread = null;
 
@@ -113,6 +113,10 @@ namespace DefendersOfH6
                 arrayOfObjectInGame = newArray;
             }
 
+        }
+
+        public List<ThinkingObject> getarrayOfObjectInGame() {
+            return arrayOfObjectInGame;
         }
 
         public void setFPS(int newFPS)
