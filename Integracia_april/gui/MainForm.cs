@@ -143,6 +143,10 @@ namespace GUI {
                 build_bug = true;
 
             }
+            if (world.isH6ServerDead())
+            {
+                MessageBox.Show("H6 server has been destroyed.");
+            }
 
         }
 
