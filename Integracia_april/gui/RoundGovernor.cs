@@ -233,8 +233,10 @@ namespace DefendersOfH6
                     }
                 }
                 if (world.isH6ServerDead()) {
-                    //TO DO sprava ze prehral tu bude
+                    //this.Invoke(new Action(() => { MessageBox.Show(this, "H6 server has been destroyed."); }));                  
                     world.skonciKolo();
+                    world.showEndOfTheGame();
+                    //throw new Exception("H6 server has been destroyed.");
                 }
             }
         }
