@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace DefendersOfH6
@@ -8,6 +9,8 @@ namespace DefendersOfH6
 
         public static string NEGATIVE_DAMAGE = "negative damage";
 
+
+        public List<Node> path;
 
         private Node position;
         public Node Position { get { return position; } set { position = value; } }
@@ -32,11 +35,22 @@ namespace DefendersOfH6
 
             this.world = world;
             
-            this.shooting = new Shooting(this);
+            this.shooting = new Shooting(this, world);
             this.mooving = new Mooving(this, finalDestinantion, graph);
             this.dying = new Dying(this);
 
+            base.presentStatus = null;
+
+            commandNewBugToMove();
+        }
+
+        private void commandNewBugToMove() {
+            if (base.presentStatus != null) {
+                return;
+            }
             base.presentStatus = mooving;
+
+            mooving.onStart();
         }
         
         
@@ -102,7 +116,19 @@ namespace DefendersOfH6
 
         public override void draw(Graphics g)
         {
-            g.FillEllipse(Brushes.Blue, position.getX(), position.getY(), 10, 10);
+            if (base.presentStatus.GetType() == typeof(Dying))
+            {
+                g.FillEllipse(Brushes.Red, position.getX(), position.getY(), 10, 10);
+            }
+            else if (base.presentStatus.GetType() == typeof(Shooting))
+            {
+                g.FillEllipse(Brushes.Green, position.getX(), position.getY(), 10, 10);
+            }
+            else
+            {
+                g.FillEllipse(Brushes.Blue, position.getX(), position.getY(), 10, 10);
+            }
+            
         }
     }
 }
