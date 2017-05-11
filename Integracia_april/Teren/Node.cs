@@ -57,6 +57,10 @@ namespace DefendersOfH6
 			return terrain;
 		}
 		
+		public void setTerrain(int type){
+			terrain = type;
+		}
+		
 		public int getId(){
 			return id;
 		}
@@ -95,6 +99,9 @@ namespace DefendersOfH6
 		            break;
 		        case 3:
 		        	g.FillEllipse(Color.FromArgb(0,0,0), x, y, 10, 10); // wall
+		        	break;
+		        case 10:
+		        	g.FillEllipse(Color.FromArgb(0,255,0), x, y, 10, 10); // target
 		        	break;
 		        default:
 		        	g.FillEllipse(Color.FromArgb(224,224,224), x, y, 10, 10);  // floor

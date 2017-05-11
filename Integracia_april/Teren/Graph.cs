@@ -13,14 +13,15 @@ namespace DefendersOfH6
 		private Random r = new Random();
 		private int distance = 10;
 		private Node[,] nodes;
-		private int target;
+		private Node target;
 		
-		public Graph(int w, int h){
-			width = w;
-			height = h;
+		public Graph(int w = 1, int h = 1){
+			width = w == 0 ? 1 : w;
+			height = h == 0 ? 1 : h;
 			nodes = new Node[width,height];
 			createNodes();
 			joinNodes();
+			setFinalTargetLocation(Convert.ToInt32(Math.Floor(width/2.0)),Convert.ToInt32(Math.Ceiling(height/2.0)));
 		}
 		
 		public void createNodes(){
@@ -116,10 +117,15 @@ namespace DefendersOfH6
 		}
 		
 		public void setFinalTargetLocation(int x, int y){
-			target = nodes[x][y].getId();
+			target = nodes[x][y];
+			target.setTerrain(10);
 		}
 		
-		public int getFinalTargetLocation(){
+		public int getFinalTargetLocationId(){
+			return target.getId();
+		}
+		
+		public Node getFinalTargetLocationNode(){
 			return target;
 		}
 		
