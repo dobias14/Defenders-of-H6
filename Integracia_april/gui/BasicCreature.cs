@@ -35,7 +35,7 @@ namespace DefendersOfH6
 
             this.world = world;
             
-            this.shooting = new Shooting(this);
+            this.shooting = new Shooting(this, world);
             this.mooving = new Mooving(this, finalDestinantion, graph);
             this.dying = new Dying(this);
 
