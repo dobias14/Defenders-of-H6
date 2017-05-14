@@ -80,7 +80,7 @@ namespace DefendersOfH6
 
         public bool isH6ServerDead()
         {
-            return lifeOfH6ServerPc < 0;
+            return lifeOfH6ServerPc <= 0;
         }
 
         public void showEndOfTheGame() {
