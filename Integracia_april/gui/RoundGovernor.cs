@@ -234,8 +234,8 @@ namespace DefendersOfH6
                 }
                 if (world.isH6ServerDead()) {
                     //this.Invoke(new Action(() => { MessageBox.Show(this, "H6 server has been destroyed."); }));                  
-                    world.skonciKolo();
                     world.showEndOfTheGame();
+                    world.skonciKolo();                  
                     //throw new Exception("H6 server has been destroyed.");
                 }
             }
