@@ -149,11 +149,11 @@ namespace DefendersOfH6
             return howManyBugs;
         }
 
-        private void spawnCreature(Node ciel) {
+        private void spawnCreature() {
             if (getAmountOfBugsInArray() <= howManyToSpawn) {
                 if (timeTillNextSpawn <= 0)
                 {
-                    BasicCreature newBug = new BasicCreature(getPositionOfNewBug(), ciel,
+                    BasicCreature newBug = new BasicCreature(getPositionOfNewBug(), graph.getFinalTargetLocationNode(),
                         graph, 100, 100, world);
                     lock (myCollection.SyncRoot)
                     {
@@ -205,7 +205,7 @@ namespace DefendersOfH6
                 //World.addOneTick();
                 Thread.Sleep(sleepingTimeLength);
 
-                spawnCreature(graph.getNode(10,10));
+                spawnCreature();
 
                 //g.Clear(Color.White);
                 graph.draw(g);
