@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -57,8 +57,13 @@ namespace DefendersOfH6
 		public int getTerrain(){
 			return terrain;
 		}
-		
-		public int getId(){
+
+        public void setTerrain(int type)
+        {
+            terrain = type;
+        }
+
+        public int getId(){
 			return id;
 		}
 		
@@ -103,7 +108,11 @@ namespace DefendersOfH6
                     sb.Color = Color.FromArgb(100,0, 0, 0);
                     g.FillEllipse(sb, x, y, 10, 10); // wall
 		        	break;
-		        default:
+                case 10:
+                    sb.Color = Color.FromArgb(0, 255, 0);
+                    g.FillEllipse(sb, x, y, 10, 10); // server probably
+                    break;
+                default:
                     sb.Color = Color.FromArgb(100,224, 224, 224);
                     g.FillEllipse(sb, x, y, 10, 10);  // floor
 		        	break;
