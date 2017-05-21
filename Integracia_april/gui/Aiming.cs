@@ -12,6 +12,8 @@ namespace DefendersOfH6
         private ICreature target;
         public ICreature Target { get { return this.target; } }
 
+        private List<ICreature> allcreatures;
+        public List<ICreature> Allcreatures { get { return this.allcreatures; } }
 
         private List<ThinkingObject> creatures;
         private Graph graph;
@@ -19,6 +21,7 @@ namespace DefendersOfH6
 
         public Aiming(List<ThinkingObject> creatures, Graph graph, ITower tower)
         {
+            allcreatures = new List<ICreature>();
             this.creatures = creatures;
             this.graph = graph;
             this.tower = tower;
@@ -27,13 +30,11 @@ namespace DefendersOfH6
 
         public Status changeStatus()
         {
-            if (tower.isDead())
+            if (this.tower.isDead())
             {
-                return tower.getDying();
+                return this.tower.getDying();
             }
-            else {
-                return null;
-            }//return tower.getAiming();
+            return null;
 
         }
 
@@ -49,27 +50,27 @@ namespace DefendersOfH6
         public void onStart()
         {
             Console.WriteLine("som zacal");
-            findTarget();
+            if(tower.GetType() == typeof(BasicTower))
+            {
+                findTarget();
+            }
+            if (tower.GetType() == typeof(MultiTargetTower))
+            {
+                getTargets();
+            }
         }
 
         public void prepare()
         {
-            if (tower.isDead())
+            if (tower.GetType() == typeof(BasicTower))
             {
-                Console.WriteLine("zomrela veza");
-                changeStatus();
+                singleTowerAction();
+            }
+            if (tower.GetType() == typeof(MultiTargetTower))
+            {
+                MultiTowerAction();
             }
 
-            if (target.isDead())
-            {
-                Console.WriteLine("som zabil");
-                changeStatus();
-                findTarget();
-            }
-            else
-            {
-                Console.WriteLine("utocim");
-            }
         }
 
         public void findTarget()
@@ -88,5 +89,66 @@ namespace DefendersOfH6
                 }
             }
         }
+
+        public void getTargets()
+        {
+            for (int i = 0; i < creatures.Count(); i++)
+            {
+                if (creatures[i].GetType() == typeof(BasicCreature))
+                {
+                    BasicCreature c = (BasicCreature)creatures[i];
+                    if (!c.isDead() && !allcreatures.Contains(c) && allcreatures.Count()<=5)
+                    {
+                        allcreatures.Add(c);
+                    }
+                }
+
+            }
+        }
+
+        public void singleTowerAction()
+        {
+            if (target == null || (target != null && target.isDead()))
+            {
+                findTarget();
+            }
+            else
+            {
+                Console.WriteLine("utocim");
+            }
+        }
+
+        public void MultiTowerAction()
+        {
+            List<BasicCreature> toRemove = new List<BasicCreature>();
+            if (allcreatures.Count() <= 0)
+            {
+                getTargets();
+            }
+            foreach (BasicCreature c in allcreatures)
+            {
+                if (c.isDead())
+                {
+                    toRemove.Add(c);
+                }
+                else
+                {
+                    Console.WriteLine("utoci multi veza");
+                }
+            }
+            if (toRemove.Count() > 0)
+            {
+          
+                foreach(BasicCreature bc in toRemove)
+                {
+                    allcreatures.Remove(bc);
+                }
+              
+                getTargets();
+            }
+            
+        }
+
     }
+
 }

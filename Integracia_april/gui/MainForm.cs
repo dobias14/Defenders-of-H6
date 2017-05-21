@@ -9,8 +9,8 @@ using System.Text;
 
 namespace GUI {
     public partial class MainForm : Form {
-        public bool build_tower;
-        public bool build_bug;
+        public bool build_tower_basic;
+        public bool build_tower_multi;
         public bool is_start;
 
         //public MessageBox 
@@ -21,32 +21,26 @@ namespace GUI {
         Graphics g;
         public MainForm() {
             InitializeComponent();
-
             g = CreateGraphics();
-            graph = new Graph(20, 20);
-            //graph.setFinalTargetLocation(10, 10);
-
+            graph = new Graph(35, 35);
             world = new World(ref things, World.Difficulty.Easy, g, graph);
             label1.Text = world.getScore() + "";
-
             listBox1.Items.AddRange(Enum.GetNames(typeof(World.Difficulty)));
 
         }
         void Button1Click(object sender, EventArgs e) {
             if (!is_start) {
                 is_start = true;
-
                 world.setDifficultyForNextRound((World.Difficulty)listBox1.SelectedIndex);
                 world.zacniKolo();
-                //graph = new Graph(1000,1000);
             }
 
         }
 
         void Button2Click(object sender, EventArgs e) {
             if (is_start) {
-                build_tower = true;
-
+                build_tower_basic = true;
+                build_tower_multi = false;
             }
         }
 
@@ -60,47 +54,53 @@ namespace GUI {
             }
 
             Node n = graph.getNode(e.X / 10, e.Y / 10);
-            //Node k = graph.getNode(50, 50);
+           
             
             
-            if (build_tower)
+            if (build_tower_basic || build_tower_multi)
             {
-                //g.FillEllipse(Brushes.Red, 50, 50, 20, 20);
                 ICollection myCollection = ArrayList.Synchronized(things);
-                BasicTower t1 = new BasicTower(n, graph, 20, 100, world);
+                BasicTower t1;
+                MultiTargetTower t2;
 
-                //t1.thinking();
-                //t1.action();
-                //t1.draw(g);
-
-                graph.disableNode(e.X / 10, e.Y / 10);
-                lock (myCollection.SyncRoot) { 
-                    if(n.getTerrain() == 1) // ak je teren stol
+                if (build_tower_basic)
+                {
+                    t1 = new BasicTower(n, graph, 20, 100, world);
+                    lock (myCollection.SyncRoot)
                     {
-                        things.Add(t1);
+                        if (n.getTerrain() == 1 && n.isEnable()) // ak je teren stol
+                        {
+                            things.Add(t1);
+                        }
+                        else
+                        {
+                            Console.WriteLine("sem nemoze veza");
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("sem nemoze veza");
-                    }
-                    //Console.WriteLine(things.Count+"DELETE");
+                    world.substractFromScore(100);
                 }
-                build_tower = false;
-                world.substractFromScore(100);
+
+                else
+                {
+                   t2 = new MultiTargetTower(n, graph, 20, 100, world);
+                    lock (myCollection.SyncRoot)
+                    {
+                        if (n.getTerrain() == 1 && n.isEnable()) // ak je teren stol
+                        {
+                            things.Add(t2);
+                           
+                        }
+                        else
+                        {
+                            Console.WriteLine("sem nemoze veza");
+                        }
+                    }
+                    world.substractFromScore(300);
+                } 
+
+                graph.disableNode(e.X / 10, e.Y / 10); 
                 showActualScoreValue();
             }
-
-            
-            if (build_bug)
-            {
-                //BasicCreature c1 = new BasicCreature(n, k, graph, 100, 100, world);
-                build_bug = false;
-                //things.Add(c1);
-                //c1.draw(g);
-            }
-            
-
-            //world.setArray(things);
 
 		}
 		
@@ -136,23 +136,19 @@ namespace GUI {
 
         }
 
+        private void showActualScoreValue()
+        {
+            label1.Text = world.getScore() + "";
+        }
+
         private void button6_Click(object sender, EventArgs e)
         {
             if (is_start)
             {
-                build_bug = true;
-
-            }
-            if (world.isH6ServerDead())
-            {
-                MessageBox.Show("H6 server has been destroyed.");
+                build_tower_multi = true;
+                build_tower_basic = false;
             }
 
-        }
-
-        private void showActualScoreValue()
-        {
-            label1.Text = world.getScore() + "";
         }
     }
 }

@@ -12,11 +12,13 @@ namespace DefendersOfH6
     {
         private int damage;
         private int hp;
+        private int waiting;
         private Node position;
         public Node Position { get { return position; } set { position = value; } }
         private World world;
 
         private Status dying;
+        private Status sleeping;
         private Status aiming;
 
         private ICreature target;
@@ -54,11 +56,11 @@ namespace DefendersOfH6
             this.world = world;
             this.hp = hp;
             this.aiming = new Aiming(world.getarrayOfObjectInGame(),graph,this);
+            this.sleeping = new Sleeping(this);
+            this.dying = new DyingTower(this);
             this.position = position;
             base.presentStatus = null;
             startShooting();
-
-            //base.presentStatus.onStart();
 
         }
 
@@ -78,12 +80,25 @@ namespace DefendersOfH6
             if (presentStatus is Aiming)
 
             {
-            	target = ((Aiming)(aiming)).Target;
-            	target.ReciveDamage(damage);
-            	
+                target = ((Aiming)(aiming)).Target;
+                if (target != null)
+                {
+                    target.ReciveDamage(damage);
+                    this.waiting = 0;
+                    base.presentStatus = sleeping;
+
+                }
             }
-   
-            else if (presentStatus is Dying)
+            else if (presentStatus is Sleeping)
+            {
+                this.waiting += 1;
+            
+                if(this.waiting == 5)
+                {
+                    base.presentStatus = aiming;
+                }                              
+            }
+            else
             {
                 //do nothing
             }
@@ -113,7 +128,7 @@ namespace DefendersOfH6
 
         public override void draw(Graphics g)
         {
-            g.FillEllipse(Brushes.Orange, position.getX(), position.getY(), 10, 10);
+            g.FillEllipse(Brushes.DarkGoldenrod, position.getX(), position.getY(), 10, 10);
         }
 
         public Node getPosition()

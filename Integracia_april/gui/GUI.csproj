@@ -53,6 +53,8 @@
     <Compile Include="Aiming.cs" />
     <Compile Include="BasicCreature.cs" />
     <Compile Include="BasicTower.cs" />
+    <Compile Include="DyingTower.cs" />
+    <Compile Include="Sleeping.cs" />
     <Compile Include="Dying.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="ICreature.cs" />
