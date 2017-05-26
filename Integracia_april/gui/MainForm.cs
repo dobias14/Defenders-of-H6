@@ -46,14 +46,14 @@ namespace GUI {
 
         void MainFormMouseUp(object sender, MouseEventArgs e) {
 
-            if (graph.getHeight() <= e.Y / 10 ||
-                graph.getWidth() <= e.X / 10
+            if (graph.getHeight() <= e.Y / 15 ||
+                graph.getWidth() <= e.X / 15
                 )
             {
                 return;
             }
 
-            Node n = graph.getNode(e.X / 10, e.Y / 10);
+            Node n = graph.getNode(e.X / 15, e.Y / 15);
            
             
             
@@ -98,7 +98,7 @@ namespace GUI {
                     world.substractFromScore(300);
                 } 
 
-                graph.disableNode(e.X / 10, e.Y / 10); 
+                graph.disableNode(e.X / 15, e.Y / 15); 
                 showActualScoreValue();
             }
 
@@ -120,15 +120,60 @@ namespace GUI {
 		void Button4Click(object sender, EventArgs e) {
 			MessageBox.Show("LOAD GAME");
 
+            // nacita sa, vytvori sa pole a cez graph.setNodes urobi novy graf
+            // Node [,] nodes = nodes;
+            //graph = new Graph(35, 35);
+            //graph.setNodes(nodes);
+            //graph.setFinalTargetLocation(x,y);
+            //world = new World(ref things, World.Difficulty.Easy, g, graph);
+
+            
             string path = "../SAVE.txt";
-            string readText = File.ReadAllText(path);
+            var lines = File.ReadLines(path);
+            Console.WriteLine(lines);
+            int LastLineNumber = 0;
+            string CurrentLine;
+            //CurrentLine = lines.Skip(LastLineNumber).First();
+            LastLineNumber++;
+
+           /* foreach (string line in lines) {
+                Console.WriteLine(line);
+            }*/
+            //string readText = File.ReadAllText(path);
 		}
 		
 		void Button5Click(object sender, EventArgs e){
 			MessageBox.Show("SAVE GAME");
-
+            string content = "";
             string path = "../SAVE.txt";
-            File.WriteAllText(path, "Neda sa ulozit subor, leboooo ste zle klikli na ten save no :)");
+            List<ThinkingObject> w = world.getarrayOfObjectInGame();
+            Node[,] nodes = graph.getNodes();
+
+            for (int i = 0; i < nodes.GetLength(0); i++)
+            {
+                for (int j = 0; j < nodes.GetLength(1); j++)
+                {
+                    content += (nodes[i, j].getX()/10).ToString() + " " + (nodes[i, j].getY()/10).ToString() + " " + nodes[i, j].getTerrain().ToString() + " ";
+                }
+            }
+            content += "\n";
+
+            Console.WriteLine(content);
+            for (int i = 0; i < w.Count; i++)
+            {
+                if (w[i].GetType() == typeof(BasicCreature)) {
+                    BasicCreature c = (BasicCreature)w[i];
+                    content += "0 " + (c.getPosition().getX() / 10).ToString() + " " + (c.getPosition().getY() / 10).ToString() + " ";
+                }
+                else
+                {
+                    BasicTower c = (BasicTower)w[i];
+                    content += "1 " + (c.getPosition().getX() / 10).ToString() + " " + (c.getPosition().getY() / 10).ToString() + " ";
+                }
+            }
+
+            Console.WriteLine(content);
+            File.WriteAllText(path, content);
 		}
 
         private void MainForm_Load(object sender, EventArgs e)

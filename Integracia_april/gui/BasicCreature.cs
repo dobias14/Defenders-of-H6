@@ -118,15 +118,15 @@ namespace DefendersOfH6
         {
             if (base.presentStatus.GetType() == typeof(Dying))
             {
-                g.FillEllipse(Brushes.Red, position.getX(), position.getY(), 10, 10);
+                g.FillEllipse(Brushes.Red, position.getX(), position.getY(), 15, 15);
             }
             else if (base.presentStatus.GetType() == typeof(Shooting))
             {
-                g.FillEllipse(Brushes.Green, position.getX(), position.getY(), 10, 10);
+                g.FillEllipse(Brushes.Green, position.getX(), position.getY(), 15, 15);
             }
             else
             {
-                g.FillEllipse(Brushes.Blue, position.getX(), position.getY(), 10, 10);
+                g.FillEllipse(Brushes.Blue, position.getX(), position.getY(), 15, 15);
             }
             
         }

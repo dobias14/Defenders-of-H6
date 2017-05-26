@@ -94,27 +94,27 @@ namespace DefendersOfH6
             switch (terrain){
 				case 0:
                     sb.Color = Color.FromArgb(100, 224, 224, 224);
-                    g.FillEllipse(sb, x, y, 10, 10); // floor
+                    g.FillEllipse(sb, x, y, 15, 15); // floor
 					break;
 		        case 1:
                     sb.Color = Color.FromArgb(100,153, 76, 0);
-                    g.FillEllipse(sb, x, y, 10, 10); // table
+                    g.FillEllipse(sb, x, y, 15, 15); // table
 		            break;
 		        case 2:
                     sb.Color = Color.FromArgb(100,96, 96, 96);
-                    g.FillEllipse(sb, x, y, 10, 10); // computer
+                    g.FillEllipse(sb, x, y, 15, 15); // computer
 		            break;
 		        case 3:
                     sb.Color = Color.FromArgb(100,0, 0, 0);
-                    g.FillEllipse(sb, x, y, 10, 10); // wall
+                    g.FillEllipse(sb, x, y, 15, 15); // wall
 		        	break;
                 case 10:
                     sb.Color = Color.FromArgb(0, 255, 0);
-                    g.FillEllipse(sb, x, y, 10, 10); // server probably
+                    g.FillEllipse(sb, x, y, 15, 15); // server probably
                     break;
                 default:
                     sb.Color = Color.FromArgb(100,224, 224, 224);
-                    g.FillEllipse(sb, x, y, 10, 10);  // floor
+                    g.FillEllipse(sb, x, y, 15, 15);  // floor
 		        	break;
 		    }         
         }

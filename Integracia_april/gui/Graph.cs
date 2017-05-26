@@ -12,7 +12,7 @@ namespace DefendersOfH6
         private int height = 0;
         private int id = 0;
         private Random r = new Random();
-        private int distance = 10;
+        private int distance = 15;
         private Node[,] nodes;
         private Node target;
 
@@ -28,8 +28,25 @@ namespace DefendersOfH6
 
         public void createNodes(){
 			for (int i = 0; i < width; i++){
-				for (int j = 0; j < height; j++){
-					nodes[i,j] = new Node(id,i*distance,j*distance,r.Next(3));
+                for (int j = 0; j < height; j++){
+                    int t = 0;
+                    int tt = r.Next(4);
+                    switch (tt) {
+                        case 1:
+                            if (r.Next(10) < 4) {
+                                t = 1;
+                            }
+                            break;
+                        case 3:
+                            if (r.Next(20) == 5) {
+                                t = 3;
+                            }
+                            break;
+                        default:
+                            t = tt;
+                            break;
+                    }
+					nodes[i,j] = new Node(id,i*distance,j*distance,t);
 					id++;
 			    }
 	        }

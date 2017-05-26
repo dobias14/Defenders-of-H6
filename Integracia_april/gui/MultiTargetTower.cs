@@ -105,7 +105,7 @@ namespace DefendersOfH6
 
         public override void draw(Graphics g)
         {
-            g.FillEllipse(Brushes.Yellow, position.getX(), position.getY(), 10, 10);
+            g.FillEllipse(Brushes.Yellow, position.getX(), position.getY(), 15, 15);
         }
 
         public Node getPosition()
