@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DefendersOfH6;
 
-namespace CreaturesTests
+namespace CreatureTests
 {
     [TestClass]
     public class ShootingTests
@@ -11,7 +11,10 @@ namespace CreaturesTests
         public void TestShootingChangeToDying()
         {
             int damage = 10, hp = 100;
-            ICreature creature = new BasicCreature(null, null, null, damage, hp, null);
+            Graph graph = new Graph(10, 10);
+            Node startDestinaton = graph.getNode(1, 1);
+            Node finalDestination = graph.getNode(5, 5);
+            ICreature creature = new BasicCreature(startDestinaton, finalDestination, graph, damage, hp, null);
             Status shooting = creature.getShooting();
             Status dying = creature.getDying();
 
