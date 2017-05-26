@@ -21,6 +21,7 @@ namespace DefendersOfH6
         private int index;
 
         private bool moovedNow;
+        private bool pathDoesNotExist;
 
         private Node nextPosition;
         public Node NextPosition { get { return this.nextPosition; } }
@@ -34,6 +35,7 @@ namespace DefendersOfH6
             this.path = null;
             this.index = 0;
             this.moovedNow = false;
+            this.pathDoesNotExist = false;
         }
         
         public Status changeStatus()
@@ -50,6 +52,10 @@ namespace DefendersOfH6
             {
                 return this.creature.getResting();
                 moovedNow = false;
+            }
+            if (pathDoesNotExist)
+            {
+                return this.creature.getDying();
             }
             return null;
         }
@@ -133,10 +139,18 @@ namespace DefendersOfH6
 
         private void calcPath()
         {
-            path = new Dijkstra(finalDestinantion, creature.getPosition(), graph)
+            try
+            {
+                path = new Dijkstra(finalDestinantion, creature.getPosition(), graph)
                                     .initialization()
                                     .algorithm()
                                     .getPath();
+            }
+            catch (Exception e)
+            {
+                pathDoesNotExist = true;
+            }
+            
             this.index = path.Count - 1;
         }
         
