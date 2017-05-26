@@ -6,6 +6,8 @@ namespace DefendersOfH6
 {
     public class BasicCreature : ThinkingObject, ICreature
     {
+        private static int MIN_RESTING_STEPS = 0;
+        private static int MAX_RESTING_STEPS = 2;
 
         public static string NEGATIVE_DAMAGE = "negative damage";
 
@@ -26,6 +28,7 @@ namespace DefendersOfH6
         private Status shooting;
         private Status mooving;
         private Status dying;
+        private Status resting;
 
         public BasicCreature(Node position, Node finalDestinantion, Graph graph, int damage, int hp, World world)
         {
@@ -38,6 +41,8 @@ namespace DefendersOfH6
             this.shooting = new Shooting(this, world);
             this.mooving = new Mooving(this, finalDestinantion, graph);
             this.dying = new Dying(this);
+            Random rnd = new Random();
+            this.resting = new Resting(this, rnd.Next(MIN_RESTING_STEPS, MAX_RESTING_STEPS));
 
             base.presentStatus = null;
 
@@ -107,6 +112,11 @@ namespace DefendersOfH6
         public Status getMoovnig()
         {
             return this.mooving;
+        }
+
+        public Status getResting()
+        {
+            return this.resting;
         }
 
         public Node getPosition()

@@ -12,5 +12,6 @@ namespace DefendersOfH6
         Status getDying();
         Status getShooting();
         Status getMoovnig();
+        Status getResting();
     }
 }

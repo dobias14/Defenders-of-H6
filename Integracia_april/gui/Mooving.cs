@@ -20,6 +20,8 @@ namespace DefendersOfH6
         private List<Node> path;
         private int index;
 
+        private bool moovedNow;
+
         private Node nextPosition;
         public Node NextPosition { get { return this.nextPosition; } }
 
@@ -31,6 +33,7 @@ namespace DefendersOfH6
             this.nextPosition = creature.getPosition();
             this.path = null;
             this.index = 0;
+            this.moovedNow = false;
         }
         
         public Status changeStatus()
@@ -42,6 +45,11 @@ namespace DefendersOfH6
             if (this.creature.getPosition() == finalDestinantion)
             {
                 return this.creature.getShooting();
+            }
+            if (moovedNow == true)
+            {
+                return this.creature.getResting();
+                moovedNow = false;
             }
             return null;
         }
@@ -76,7 +84,8 @@ namespace DefendersOfH6
 
         public void prepare()
         {
-             mooveOnNextNode();
+            mooveOnNextNode();
+            moovedNow = true;
 
         }
 
