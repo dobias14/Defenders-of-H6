@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DefendersOfH6;
 
-namespace CreaturesTests
+namespace CreatureTests
 {
     [TestClass]
     public class MoovingTests
@@ -11,7 +11,10 @@ namespace CreaturesTests
         public void TestMoovingChangeToDying()
         {
             int damage = 10, hp = 100;
-            ICreature creature = new BasicCreature(null, null, null, damage, hp, null);
+            Graph graph = new Graph(10, 10);
+            Node startDestinaton = graph.getNode(1, 1);
+            Node finalDestination = graph.getNode(5, 5);
+            ICreature creature = new BasicCreature(startDestinaton, finalDestination, graph, damage, hp, null);
             Status mooving = creature.getMoovnig();
             Status dying = creature.getDying();
 
@@ -25,21 +28,24 @@ namespace CreaturesTests
         public void TestInitialStatus()
         {
             int damage = 10, hp = 100;
-            ThinkingObject creatureThinkigObject = new BasicCreature(null, null, null, damage, hp, null);
+            Graph graph = new Graph(10, 10);
+            Node startDestinaton = graph.getNode(1, 1);
+            Node finalDestination = graph.getNode(5, 5);
+            ThinkingObject creatureThinkigObject = new BasicCreature(startDestinaton, finalDestination, graph, damage, hp, null);
             Status mooving = ((ICreature)creatureThinkigObject).getMoovnig();
 
-            Assert.AreEqual(creatureThinkigObject.presentStatus , mooving);
+            Assert.AreEqual(creatureThinkigObject.presentStatus, mooving);
         }
 
         [TestMethod]
         public void TestPositionNull()
         {
             int damage = 10, hp = 100;
-            ThinkingObject creatureThinkigObject = new BasicCreature(null, null, null, damage, hp, null);
-            Status mooving = ((ICreature)creatureThinkigObject).getMoovnig();
 
             try
             {
+                ThinkingObject creatureThinkigObject = new BasicCreature(null, null, null, damage, hp, null);
+                Status mooving = ((ICreature)creatureThinkigObject).getMoovnig();
                 mooving.onStart();
             }
             catch (NullReferenceException e)
@@ -54,11 +60,11 @@ namespace CreaturesTests
             int x = 0, y = 0, id = 0, terrain = 0;
             Node startingNode = new Node(id, x, y, terrain);
             int damage = 10, hp = 100;
-            ThinkingObject creatureThinkigObject = new BasicCreature(startingNode, null, null, damage, hp, null);
-            Status mooving = ((ICreature)creatureThinkigObject).getMoovnig();
 
             try
             {
+                ThinkingObject creatureThinkigObject = new BasicCreature(startingNode, null, null, damage, hp, null);
+                Status mooving = ((ICreature)creatureThinkigObject).getMoovnig();
                 mooving.onStart();
             }
             catch (NullReferenceException e)
@@ -74,11 +80,11 @@ namespace CreaturesTests
             Node startingNode = new Node(id, x, y, terrain);
             Node finallDestination = new Node(id, x, y, terrain);
             int damage = 10, hp = 100;
-            ThinkingObject creatureThinkigObject = new BasicCreature(startingNode, finallDestination, null, damage, hp, null);
-            Status mooving = ((ICreature)creatureThinkigObject).getMoovnig();
 
             try
             {
+                ThinkingObject creatureThinkigObject = new BasicCreature(startingNode, finallDestination, null, damage, hp, null);
+                Status mooving = ((ICreature)creatureThinkigObject).getMoovnig();
                 mooving.onStart();
             }
             catch (NullReferenceException e)
@@ -90,7 +96,7 @@ namespace CreaturesTests
         [TestMethod]
         public void TestPathFinder()
         {
-            Graph graph = new Graph(10,10);
+            Graph graph = new Graph(10, 10);
             Node startDestinaton = graph.getNode(1, 1);
             Node finalDestination = graph.getNode(5, 5);
             System.Diagnostics.Debug.WriteLine(startDestinaton);
@@ -110,6 +116,5 @@ namespace CreaturesTests
             }
             Assert.AreEqual(finalDestination, creature.getPosition());
         }
-
     }
 }
